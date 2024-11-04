@@ -1,8 +1,5 @@
 <div class="user">
-
     <h3 class="title">Halaman Pengguna</h3>
-
-
 
     <!-- Kontainer utama untuk tabel dan tombol -->
     <div class="card-table search-card">
@@ -43,8 +40,10 @@
                                 <button class="detail-btn" data-toggle="modal" data-target="#info<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
                                 <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
                                 <button class="delete-btn" data-toggle="modal" data-target="#delete<?= $value['id_pengguna'] ?>"><i class="fas fa-trash"></i> Hapus</button>
+                                <?php if ($value['id_pengguna'] != session('id_pengguna')) : ?>
+                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#resetPassword<?= $value['id_pengguna'] ?>"><i class="fas fa-key"></i> Reset Password</button>
+                                <?php endif; ?>
                             </div>
-
                         </td>
                     </tr>
                 <?php } ?>

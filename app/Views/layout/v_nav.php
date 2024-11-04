@@ -8,9 +8,9 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="masterDropdown" style="justify-content: center; align-items:center;"> <!-- Mengatur jarak dropdown ke bawah -->
       <li><a class="dropdown-item" href="<?= base_url('master/pengguna'); ?>">Pengguna</a></li>
-      <li><a class="dropdown-item" href="<?= base_url('master/asaldoktrin'); ?>">Asal Doktrin</a></li>
-      <li><a class="dropdown-item" href="<?= base_url('master/unitorganisasi'); ?>">Unit Organisasi</a></li>
-      <li><a class="dropdown-item" href="<?= base_url('master/jenisdoktrin'); ?>">Jenis Doktrin</a></li>
+      <li><a class="dropdown-item" href="<?= base_url('master/pencipta'); ?>">Asal Doktrin</a></li>
+      <li><a class="dropdown-item" href="<?= base_url('master/unit'); ?>">Unit Organisasi</a></li>
+      <li><a class="dropdown-item" href="<?= base_url('master/klasifikasi'); ?>">Jenis Doktrin</a></li>
     </ul>
   </li>
 

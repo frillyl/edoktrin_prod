@@ -3,15 +3,24 @@
 namespace App\Controllers;
 
 use App\Models\ModelPengguna;
+use App\Models\ModelPencipta;
+use App\Models\ModelUnit;
+use App\Models\ModelKlasifikasi;
 
 class Master extends BaseController
 {
     protected $ModelPengguna;
+    protected $ModelPencipta;
+    protected $ModelUnit;
+    protected $ModelKlasifikasi;
 
     public function __construct()
     {
         helper('form');
         $this->ModelPengguna = new ModelPengguna();
+        $this->ModelPencipta = new ModelPencipta();
+        $this->ModelUnit = new ModelUnit();
+        $this->ModelKlasifikasi = new ModelKlasifikasi();
     }
 
     // MASTER PENGGUNA
@@ -184,5 +193,350 @@ class Master extends BaseController
         $this->ModelPengguna->delete_data($data);
         session()->setFlashdata('success', 'Data pengguna berhasil dihapus!');
         return redirect()->to(base_url('master/pengguna'));
+    }
+
+    // Reset Password Pengguna
+    public function reset_password($id_pengguna)
+    {
+        $passwordDefault = password_hash('defaultpassword', PASSWORD_BCRYPT);
+
+        $data = [
+            'id_pengguna' => $id_pengguna,
+            'password' => $passwordDefault
+        ];
+        $this->ModelPengguna->edit($data);
+
+        session()->setFlashdata('success', 'Password pengguna berhasil direset.');
+        return redirect()->to(base_url('master/pengguna'));
+    }
+
+    // MASTER PENCIPTA
+    // Index Asal Doktrin
+    public function index_pencipta()
+    {
+        $data = [
+            'title' => 'E-Doktrin',
+            'sub'   => 'Master Asal Doktrin',
+            'content' => 'master/pencipta/v_index',
+            'pencipta' => $this->ModelPencipta->allData()
+        ];
+        return view('layout/v_wrapper', $data);
+    }
+
+    // Tambah Asal Doktrin
+    public function add_pencipta()
+    {
+        if ($this->validate([
+            'pencipta' => [
+                'label' => 'Asal Doktrin',
+                'rules' => 'required|is_unique[tb_pencipta.pencipta]|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'created_by' => [
+                'label' => 'Ditambahkan Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'pencipta' => $this->request->getPost('pencipta'),
+                'created_by' => $this->request->getPost('created_by')
+            );
+            $this->ModelPencipta->add($data);
+            session()->setFlashdata('success', 'Data asal doktrin berhasil ditambahkan.');
+            return redirect()->to(base_url('master/pencipta'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/pencipta'));
+        }
+    }
+
+    // Ubah Asal Doktrin
+    public function edit_pencipta($id_pencipta)
+    {
+        $dataLama = $this->ModelPencipta->find($id_pencipta);
+        if ($this->validate([
+            'pencipta' => [
+                'label' => 'Asal Doktrin',
+                'rules' => 'required|is_unique[tb_pencipta.pencipta,id_pencipta,' . $id_pencipta . ']|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'edited_by' => [
+                'label' => 'Diubah Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'pencipta' => $this->request->getPost('pencipta'),
+                'edited_by' => $this->request->getPost('edited_by')
+            );
+            $this->ModelPencipta->update($id_pencipta, $data);
+            session()->setFlashdata('success', 'Data asal doktrin berhasil diubah.');
+            return redirect()->to(base_url('master/pencipta'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/pencipta'));
+        }
+    }
+
+    // Hapus Asal Doktrin
+    public function delete_pencipta($id_pencipta)
+    {
+        $data = [
+            'id_pencipta' => $id_pencipta
+        ];
+        $this->ModelPencipta->delete_data($data);
+        session()->setFlashdata('success', 'Data asal doktrin berhasil dihapus!');
+        return redirect()->to(base_url('master/pencipta'));
+    }
+
+    // MASTER UNIT ORGANISASI
+    // Index Unit Organisasi
+    public function index_unit()
+    {
+        $data = [
+            'title' => 'E-Doktrin',
+            'sub'   => 'Master Unit Organisasi',
+            'content' => 'master/unit/v_index',
+            'unit' => $this->ModelUnit->allData()
+        ];
+        return view('layout/v_wrapper', $data);
+    }
+
+    // Tambah Unit Organisasi
+    public function add_unit()
+    {
+        if ($this->validate([
+            'unit' => [
+                'label' => 'Unit Organisasi',
+                'rules' => 'required|is_unique[tb_unit.unit]|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'created_by' => [
+                'label' => 'Ditambahkan Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'unit' => $this->request->getPost('unit'),
+                'created_by' => $this->request->getPost('created_by')
+            );
+            $this->ModelUnit->add($data);
+            session()->setFlashdata('success', 'Data unit organisasi berhasil ditambahkan.');
+            return redirect()->to(base_url('master/unit'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/unit'));
+        }
+    }
+
+    // Ubah Unit Organisasi
+    public function edit_unit($id_unit)
+    {
+        $dataLama = $this->ModelUnit->find($id_unit);
+        if ($this->validate([
+            'unit' => [
+                'label' => 'Unit Organisasi Arsip',
+                'rules' => 'required|is_unique[tb_unit.unit,id_unit,' . $id_unit . ']|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'edited_by' => [
+                'label' => 'Diubah Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'unit' => $this->request->getPost('unit'),
+                'edited_by' => $this->request->getPost('edited_by')
+            );
+            $this->ModelUnit->update($id_unit, $data);
+            session()->setFlashdata('success', 'Data unit organisasi berhasil diubah.');
+            return redirect()->to(base_url('master/unit'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/unit'));
+        }
+    }
+
+    // Hapus Unit Organisasi
+    public function delete_unit($id_unit)
+    {
+        $data = [
+            'id_unit' => $id_unit
+        ];
+        $this->ModelUnit->delete_data($data);
+        session()->setFlashdata('success', 'Data unit organisasi berhasil dihapus!');
+        return redirect()->to(base_url('master/unit'));
+    }
+
+    // MASTER JENIS DOKTRIN
+    public function index_klasifikasi()
+    {
+        $data = [
+            'title' => 'E-Doktrin',
+            'sub'   => 'Master Jenis Doktrin',
+            'content' => 'master/klasifikasi/v_index',
+            'klasifikasi' => $this->ModelKlasifikasi->allData()
+        ];
+        return view('layout/v_wrapper', $data);
+    }
+
+    // Tambah Jenis Doktrin
+    public function add_klasifikasi()
+    {
+        if ($this->validate([
+            'kode' => [
+                'label' => 'Kode Doktrin',
+                'rules' => 'permit_empty|is_unique[tb_klasifikasi.kode]|max_length[15]',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 15 karakter!'
+                ]
+            ],
+            'klasifikasi' => [
+                'label' => 'Jenis Doktrin',
+                'rules' => 'required|is_unique[tb_klasifikasi.klasifikasi]|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'retensi' => [
+                'label' => 'Retensi',
+                'rules' => 'permit_empty',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!'
+                ]
+            ],
+            'kategori' => [
+                'label' => 'Kategori',
+                'rules' => 'permit_empty',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!'
+                ]
+            ],
+            'created_by' => [
+                'label' => 'Ditambahkan Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'kode' => $this->request->getPost('kode'),
+                'klasifikasi' => $this->request->getPost('klasifikasi'),
+                'retensi' => $this->request->getPost('retensi'),
+                'kategori' => $this->request->getPost('kategori'),
+                'created_by' => $this->request->getPost('created_by')
+            );
+            $this->ModelKlasifikasi->add($data);
+            session()->setFlashdata('success', 'Data jenis doktrin berhasil ditambahkan.');
+            return redirect()->to(base_url('master/klasifikasi'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/klasifikasi'));
+        }
+    }
+
+    // Ubah Jenis Doktrin
+    public function edit_klasifikasi($id_klasifikasi)
+    {
+        $dataLama = $this->ModelKlasifikasi->find($id_klasifikasi);
+        if ($this->validate([
+            'kode' => [
+                'label' => 'Kode Doktrin',
+                'rules' => 'permit_empty|is_unique[tb_klasifikasi.kode,id_klasifikasi,' . $id_klasifikasi . ']|max_length[15]',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 15 karakter!'
+                ]
+            ],
+            'klasifikasi' => [
+                'label' => 'Jenis Doktrin',
+                'rules' => 'required|is_unique[tb_klasifikasi.klasifikasi,id_klasifikasi,' . $id_klasifikasi . ']|max_length[100]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 100 karakter!'
+                ]
+            ],
+            'retensi' => [
+                'label' => 'Retensi',
+                'rules' => 'permit_empty',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!'
+                ]
+            ],
+            'kategori' => [
+                'label' => 'Kategori',
+                'rules' => 'permit_empty',
+                'errors' => [
+                    'permit_empty' => '{field} boleh kosong!'
+                ]
+            ],
+            'edited_by' => [
+                'label' => 'Diubah Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $data = array(
+                'kode' => $this->request->getPost('kode'),
+                'klasifikasi' => $this->request->getPost('klasifikasi'),
+                'retensi' => $this->request->getPost('retensi'),
+                'kategori' => $this->request->getPost('kategori'),
+                'edited_by' => $this->request->getPost('edited_by')
+            );
+            $this->ModelKlasifikasi->update($id_klasifikasi, $data);
+            session()->setFlashdata('success', 'Data jenis doktrin berhasil diubah.');
+            return redirect()->to(base_url('master/klasifikasi'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('master/klasifikasi'));
+        }
+    }
+
+    // Hapus Jenis Doktrin
+    public function delete_klasifikasi($id_klasifikasi)
+    {
+        $data = [
+            'id_klasifikasi' => $id_klasifikasi
+        ];
+        $this->ModelKlasifikasi->delete_data($data);
+        session()->setFlashdata('success', 'Data jenis doktrin berhasil dihapus!');
+        return redirect()->to(base_url('master/klasifikasi'));
     }
 }
