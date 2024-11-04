@@ -1,0 +1,1443 @@
+html, body {
+  height: 100%; /* Memastikan body mengambil tinggi penuh */
+  margin: 0; /* Menghapus margin */
+}
+
+.home, .user, .archive, .add, .profile {
+  min-height: calc(100vh - 50px); /* Tinggi minimum konten untuk mendorong footer ke bawah */
+  padding-bottom: 50px; /* Padding bawah untuk memberikan ruang untuk footer */
+}
+
+
+
+
+#footer {
+  
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: #8A3A42;
+  color: white;
+  text-align: center;
+  line-height: 50px; 
+}
+
+/* landing page session */
+
+.icon-login {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 2rem; 
+}
+
+.page-background {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: top;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 15px; /* Add padding to control the sides */
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+
+
+      .main-section {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          background-color: rgba(255, 255, 255, 0.7); /* Adjust transparency as needed */
+          padding: 20px;
+      }
+
+      
+
+      .h1-landing {
+          font-size: 24px;
+          color: #333;
+          margin-bottom: 20px;
+      }
+
+
+      .custom-login-btn {
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        width: 100px;
+        height: 35px;
+        background-color: #8A3A42;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .icon-login .custom-login-btn:hover {
+      background-color: #8A3A42;
+      color: #ffffff;
+    }
+    
+    
+    .btn .custom-login-btn:hover {
+        background-color: #8A3A42;
+    }
+
+
+    
+
+
+    /* landing page end */
+      
+
+/* search drpdown */
+
+
+
+.main-card {
+  width: 150%; /* Atur lebar maksimal */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Pastikan padding dihitung dalam lebar */
+}
+
+.thumbnail {   /* mengatur lebar gambar pada */
+  width: 150px; /* Adjust width as needed */
+  margin-left: 5px;
+  margin-right: 20px;
+  height: auto; /* Maintain aspect ratio */
+}
+
+.container {
+      width: 100vw; /* Mengisi seluruh viewport */
+      padding: 0;
+      margin: 0;
+  }
+
+
+
+
+
+
+      
+    
+     
+    
+      
+
+      .btn-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  gap: 10px;
+}
+
+
+.custom-preview,
+.custom-download {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-top: 10px;
+  height: 35px; 
+  padding: 0 20px;
+  font-size: 16px; 
+  border: none;
+  border-radius: 5px; 
+  color: white; 
+  background-color: #8A3A42;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+
+
+/* Hover effects */
+.custom-preview:hover {
+  background-color: #8A3A42; 
+  transform: scale(1.05); 
+}
+
+.custom-download:hover {
+  background-color: #8A3A42; 
+  transform: scale(1.05); 
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: black;
+  text-align: left; /* Add this line */
+}
+
+.card-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  text-align: justify; /* Add this line */
+}
+
+/* search dropdown end */
+      
+
+
+/* Login Section */
+.container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  width: 100%;
+  align-items: center; /* Centers items vertically */
+}
+
+.left-section {
+  width: 50%; /* 50% of the page width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #FDFDFD; /* Matching background color for continuity */
+}
+
+.img-login img {
+  width: 300px;
+  height: auto;
+}
+
+/* Right Section */
+.right-section {
+  width: 50%; /* 50% of the page width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #FDFDFD;
+  position: relative; /* Allows for positioning circles */
+  padding: 20px; /* Adds spacing around the section */
+  box-sizing: border-box;
+}
+
+/* Login Form */
+.login-form {
+  height: 450px;
+  width: 400px;
+  max-width: 400px; /* Sets the max width to 500px */
+  padding: 30px 50px; /* Adjust padding for smaller or larger form size */
+  background-color: #E0E0E0;
+  border-radius: 10px;
+  box-shadow: #99999933;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  margin-top: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: #333;
+}
+
+.input-box {
+  width: 400px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-box i {
+  position: absolute;
+  left: 10px;
+  font-size: 20px;
+  color: #aaa;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; /* Padding to make space for the icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  margin-top: 5px;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.login-options a {
+  text-decoration: none;
+  color: #d32f2f;
+  font-size: 14px;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background-color: #8A3A42;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 
+    0px 4px 8px 2px rgba(0, 0, 0, 0.3), /* First shadow: #0000004D at 30% */
+    0px 2px 4px 1px rgba(0, 0, 0, 0.15); /* Second shadow: #00000026 at 15% */
+}
+
+
+
+
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(224, 224, 224, 0.904); /* Semi-transparent red */
+    z-index: 1; /* Ensures circles are behind other content */
+}
+
+.circle-one {
+    width: 400px; /* Diameter of the circle */
+    height: 400px; /* Diameter of the circle */
+    top: -45%; /* Position from the top */
+    left: 3%; /* Position from the left */
+}
+
+.circle-two {
+    width: 400px; /* Diameter of the circle */
+    height: 500px; /* Diameter of the circle */
+    bottom: -50%; /* Position from the bottom */
+    left: -15%; /* Position from the left */
+    border-radius: 60%;
+}
+
+.circle-three {
+    width: 400px; /* Diameter of the circle */
+    height: 400px; /* Diameter of the circle */
+    bottom: -40%; /* Position from the bottom */
+    right: -10%; /* Position from the right */
+}
+
+/* Navbar Section */
+
+nav { 
+    background-color: #F8F8F8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem; 
+    height: 80px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a { 
+  position: relative;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    padding: 8px 0;
+    font-size: 18px; 
+    transition: all 300ms ease;
+    border-bottom: 1px solid rgba(0, 128, 0, 0);
+    display: inline-block;
+    
+}
+
+.nav a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease;
+}
+
+nav ul li a:hover {
+    color: black;
+    border-bottom: 1px solid #8A3A42;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+nav ul li a.active {
+  color: black;
+  border-bottom: 1px solid #8A3A42;
+  font-weight: bold;
+}
+
+
+.container-home {
+  overflow-x: hidden;
+}
+
+
+.judul { 
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 24px;
+    margin-left: 1.5rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-top: -10px;
+  margin-right: 5px;
+}
+
+
+.fas.fa-archive {
+    margin-right: 0.5rem;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+    margin-left: 2.5rem;
+}
+
+.far.fa-bell {
+    font-size: 24px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    min-width: 200px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item-icon {
+    margin-right: 10px;
+}
+
+.dropdown-user {
+    position: relative;
+}
+
+
+.home {
+  background-color: #EAEAEA; /* Set your desired background color */
+}
+
+.page-home {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: top;
+  width: 100%;
+  padding: 0 15px; /* Add padding to control the sides */
+}
+
+.container-home {  
+  padding: 20px; /* Add padding around the content */
+}
+
+   .card.card-waves {
+    width: 80%; 
+    margin: 0 auto; 
+    margin-bottom: 5px;
+    height: auto;
+    background-color: #8A3A42;
+    border-radius: 20px;
+}
+
+.card-body {
+  color: white;
+}
+
+.card.card-waves .card-body {
+    padding: 2rem; 
+}
+
+.img {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
+.custom-card {
+  height: 150px; /* Tinggi card */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+}
+
+.left-home{
+  background-color: #000000;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  color: white;
+}
+
+.right-home {
+  background-color: #8A3A42;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Untuk menampilkan versi warna alternatif pada card kedua */
+.alt-left {
+  background-color: #8A3A42;
+}
+
+.alt-right {
+  background-color: #000000;
+}
+
+.top-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.bottom-text {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+/* Search container styles */
+.searchcontainer {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100px; /* Adjust height as needed */
+  margin-top: -30px;
+  margin-bottom: 1px;
+}
+
+.search-container {
+  padding: 40px;
+  text-align: center;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.search-container input[type="text"] {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.search-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8A3A42;
+  border: none;
+  border-radius: 5px;
+}
+
+#results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+
+.result-item {
+  background-color: #E2E2E2;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.search {
+  border-radius: 5px;
+}
+
+/* Placeholder styling */
+::placeholder {
+  color: grey;
+  opacity: 1;
+}
+
+.search-2 {
+  position: relative;
+  display: flex; /* Ensure flex display */
+  align-items: center; /* Center items vertically */
+  width: 60rem; /* Adjust the overall width of the search container */
+}
+
+.search-2 input {
+  height: 50px;
+  border: none;
+  flex: 1; /* Allow input to grow and take available space */
+  padding-left: 18px; /* Space on the left */
+  padding-right: 0; /* Remove padding on the right */
+  border-radius: 8px; /* Rounded corners for the left side */
+}
+
+.search-2 button {
+  border: none;
+  height: 40px; /* Match input height */
+  background-color: #8A3A42;
+  color: #fff;
+  width: 90px; /* Set button width */
+  border-radius: 8px; /* Rounded corners for the right side */
+  margin-left: -100px; /* Slight overlap to remove gap */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+
+/* Button hover effect */
+.search-2 button:hover {
+  background-color: #7A2B30; /* Darker shade on hover */
+}
+
+.title {
+  margin-left: 80px;
+  margin-top: 30px;
+  text-align: left; 
+  margin-bottom: 20px;
+}
+
+
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: #fff; 
+  margin: auto; 
+  padding: 20px 40px; 
+  border: 1px solid #888; 
+  border-radius: 10px; 
+  width: 90%; 
+  max-width: 550px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+
+
+
+
+.close-button {
+  color: #333; /* Dark color */
+  float: right;
+  font-size: 30px; /* Larger font size */
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #f44336; /* Change color on hover */
+  cursor: pointer;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Space between buttons */
+}
+
+
+
+
+
+/* Modal body styles */
+.modal-body {
+  display: flex; 
+  flex-direction: column; 
+  width: 100%;
+}
+
+.modal-body p {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.detail-value {
+  margin-left: 10px; 
+  text-align: right; 
+}
+
+
+/* Left and right column styles */
+.modal-left, .modal-right {
+  width: 100%; /* Full width for both columns */
+  padding: 15px; /* Padding around content for better spacing */
+}
+
+.modal-left {
+  border-bottom: 1px solid #ddd; /* Bottom border for left column */
+}
+
+.modal-left p, .modal-right p {
+  margin: 10px 0; /* Margin for paragraphs */
+}
+
+/* Optional: Style for the modal itself */
+.modal-content {
+  overflow: hidden; /* Prevent content overflow */
+}
+
+
+
+
+/* Input Group */
+.input-group {
+  width: calc(100% - 40px); /* Full width minus horizontal padding */
+  margin-bottom: 15px;
+}
+
+/* Wrapper around input and icon */
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Input field styling for all inputs */
+.input-wrapper input {
+  width: 400px; /* Full width of wrapper */
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+/* Icon styling */
+.input-wrapper i {
+  color: #888;
+  font-size: 16px;
+  margin-right: 10px;
+  pointer-events: none;
+}
+
+
+
+
+
+.password-input-wrapper {
+  position: relative; /* Keep the positioning for the arrow */
+}
+
+/* Select Styling */
+.password-input-wrapper select {
+  width: 426px; 
+  height: 40px; 
+  border: none; 
+  outline: none; 
+  font-size: 16px;
+  color: #797979;
+  text-align: left;
+  appearance: none; 
+  background-color: white; 
+  border-radius: 8px; 
+  margin-top: -6px; 
+}
+
+
+
+/* Optional: Custom styling for the select's dropdown arrow */
+.password-input-wrapper select::-ms-expand {
+  display: none; /* Hide the default dropdown arrow in IE */
+}
+
+.password-input-wrapper::after {
+  content: '▼'; /* Custom arrow character */
+  position: absolute;
+  right: 15px; /* Position the arrow */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for centering */
+  pointer-events: none; /* Prevent click on arrow */
+  color: #888; /* Match icon color */
+}
+
+
+
+
+
+
+/* Flexbox for name inputs */
+.name-group {
+  display: flex;
+  gap: 10px; /* Space between the first and last name fields */
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Each input group in the name group takes up equal space */
+.name-group .input-group {
+  flex: 1; /* Each input takes equal space */
+}
+
+/* Adjust input group to occupy equal space */
+.name-group .input-wrapper input {
+  width: 100%; /* Full width of input wrapper */
+  font-size: 16px; 
+}
+
+.close-btn {
+  background-color: transparent; /* Transparent background */
+  background: none;
+  border: none; /* No border */
+  font-size: 2em; /* Increase font size */
+  color: black; /* Light grey color */
+  cursor: pointer; /* Pointer cursor on hover */
+  float: right; /* Align to the right */
+  position: absolute; /* Position it absolutely to the top right */
+  top: 10px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+}
+
+.close-btn:hover {
+  color: #000; /* Darker color on hover */
+}
+
+
+.button-container {
+  text-align: center; 
+  margin-top: 50px;
+}
+
+.submit-btn {
+  background-color: #8A3A42; 
+  color: white; 
+  font-size: 16px;
+  font-weight: 600;
+  width: 150px;
+  height: 40px;
+  border: none; 
+  border-radius: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .card-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 0 80px 10px 80px;
+  }
+
+  .card-table table th.judul-dokumen {
+    width: 30%; /* Lebar untuk kolom Judul Dokumen */
+}
+
+
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .search-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  .search-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    position: relative;
+    margin-top: 30px;
+  }
+  .search-bar input {
+    width: 200px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 25px;
+  }
+  .search-bar .fas {
+    font-size: 18px;
+  }
+  .search-bar input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  .search-icon i {
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    color: #aaa;
+  }
+  .arrows {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .align-center-icon {
+    position: absolute;
+    left: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .search-bar button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .search-bar button:hover {
+    background-color: #45a049;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    
+}
+
+.action-buttons button {
+    padding: 2px 10px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+
+  .action-buttons button:hover {
+    background-color: #bbb;
+  }
+  .pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 80px;
+  }
+  .pagination button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+  }
+  .pagination button.active {
+    background-color: transparent;
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
+.create-btn {
+    padding: 8px 20px;
+    background-color: #8A3A42;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-left: 80px;
+  }
+  .create-btn:hover {
+    background-color: #8A3A42;
+  }
+
+
+
+  
+
+
+
+
+
+.create-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center; /* Center the heading */
+    flex: 1; /* Allows the heading to take up available space */
+}
+
+.create-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-align items in modal body */
+}
+
+.create-body .name-group {
+  display: flex; /* Use flexbox to arrange children in a row */
+  justify-content: space-between; /* Space them evenly */
+  width: 100%; /* Make the name group take full width */
+}
+
+.create-body .name-group input {
+  width: 48%; /* Adjust width to fit both inputs side by side */
+  margin-right: 10px; /* Add spacing between inputs */
+}
+
+.create-body .name-group input:last-child {
+  margin-right: 0; /* Remove right margin for the last input */
+}
+
+
+
+
+
+
+
+
+
+
+
+.col-form-label {
+white-space: nowrap;
+font-weight: bold;
+text-align: left;
+}
+
+.archive-form {
+background-color: transparent;
+padding: 0;
+border-radius: 0;
+box-shadow: none;
+max-width: 600px;
+width: 100%;
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+}
+
+/* Adjust alignment for form controls */
+.form-group .col-sm-9 {
+padding-right: 15px;
+}
+
+/* CSS untuk dropdown agar tampilannya lebih baik */
+.form-control {
+height: auto; /* Memastikan tinggi dropdown sesuai */
+}
+
+
+/* CSS untuk dropdown agar tampilannya lebih baik */
+.custom-dropdown {
+background-color: white; /* Latar belakang putih untuk dropdown */
+border: 1px solid #ced4da; /* Border untuk custom dropdown */
+border-radius: 0.25rem;
+padding: 0.375rem 0.75rem; /* Padding agar tampak rapi */
+position: relative;
+cursor: pointer; /* Kursor saat hover */
+}
+
+
+.custom-dropdown.open {
+border-color: #007bff; /* Ubah border saat dropdown terbuka */
+}
+.options {
+background-color: white; /* Latar belakang untuk opsi */
+display: none; /* Sembunyikan opsi sampai dropdown dibuka */
+position: absolute;
+border: 1px solid #ced4da; /* Border untuk opsi */
+border-radius: 0.25rem;
+z-index: 1000;
+width: 100%; /* Sesuaikan lebar opsi */
+max-height: 150px; /* Maksimum tinggi opsi */
+overflow-y: auto; /* Aktifkan scroll jika terlalu banyak opsi */
+
+}
+.options div {
+padding: 0.5rem; /* Padding untuk opsi */
+cursor: pointer; /* Kursor saat hover */
+}
+.options div:hover {
+background-color: #f8f9fa; /* Highlight saat hover */
+}
+
+.upload-card {
+background-color: #f9f9f9; /* Light background for card */
+border-radius: 10px; /* Rounded corners for the card */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+padding: 20px; /* Padding around the card */
+}
+
+.upload-container {
+display: flex; /* Use flexbox for alignment */
+align-items: flex-start; /* Align items at the start */
+}
+
+.file-info {
+margin-right: 20px; /* Space between file info and upload box */
+color: #666; /* Lighter text color */
+line-height: 1.5; /* Improve line height for readability */
+}
+
+.upload-card {
+background-color: #f9f9f9; /* Light background for card */
+border-radius: 10px; /* Rounded corners for the card */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+padding: 20px; /* Padding around the card */
+}
+
+.upload-container {
+display: flex;
+flex-direction: column; /* Stack items vertically */
+align-items: flex-start; /* Align items to the left */
+}
+
+.upload-box {
+border: 2px dashed #ccc;
+border-radius: 10px;
+width: 100%; /* Make the box responsive */
+max-width: 600px; /* Set a max width for larger screens */
+padding: 25px;
+background-color: #fff;
+text-align: center;
+position: relative
+}
+
+.upload-icon img {
+width: 50px;
+height: 50px;
+}
+
+
+
+span {
+display: block;
+margin: 10px 0;
+color: #aaa;
+}
+
+.file-info {
+font-size: 12px;
+color: #888;
+}
+
+#file-input {
+display: none;
+}
+
+
+
+/* profile css */
+
+
+
+  .profile-container {
+    display: flex; 
+    justify-content: center;
+    margin: 20px; 
+}
+
+.profile-left {
+  margin-top: 90px;
+  margin-right: 50px;
+    width: 250px; 
+    text-align: center; 
+    align-items: flex-start;
+}
+
+.profile-picture img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  margin-top: -45px; 
+  margin-left: 60px; 
+}
+
+
+.profile-card {
+  width: 50%;
+    height: 600px; 
+    margin-top: 90px;
+    margin-bottom: 90px;
+    margin-left: 20px; 
+    padding: 35px; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #fff; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+/* Other styles remain unchanged */
+.form-label {
+    font-weight: 600; /* Make labels bold */
+    margin-bottom: 5px; /* Add space below labels */
+}
+
+.form-control {
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    padding: 10px; /* Padding inside input fields */
+    transition: border-color 0.3s; /* Transition for border color change */
+}
+
+
+
+/* asal doktrin */
+
+.custom-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal.show-modal {
+  display: flex; /* Only display when .show-modal class is added */
+}
+
+
+/* Custom Modal Content Styles */
+.custom-modal-content {
+  position: relative;
+  display: none;
+  background-color: #fff; /* White background */
+  margin: auto; /* Centered */
+  padding: 20px 40px; /* Padding around the content */
+  border: 1px solid #888; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  width: 90%; /* Responsive width */
+  max-width: 550px; /* Max width */
+  height: 320px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  display: block; /* Changed to block to avoid flexbox layout */
+  transform: translateY(-30px); /* Start position for animation */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Show class for modal content animation */
+.custom-modal-content.show {
+  transform: translateY(0); /* End position for animation */
+}
+
+/* Close button styles */
+.close-button {
+  position: absolute; /* Position absolute within the modal content */
+  top: -10px; /* Adjust this value as needed */
+  right: 20px; /* Distance from the right */
+  color: black; /* Dark color */
+  font-size: 30px; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor */
+  transition: color 0.3s; /* Transition for color change */
+}
+
+/* Close button hover effect */
+.close-button:hover,
+.close-button:focus {
+  color: black; /* Change color on hover */
+}
+
+/* Modal buttons container styles */
+
+
+/* Align the label and input group to the left */
+.left-align-group {
+  margin-top: 10px; /* Space above the input group */
+  margin-left: 0; /* Align to the left */
+}
+
+.left-align-group label {
+  display: block; /* Ensure label is on its own line */
+  margin-bottom: 10px; /* Space between label and input */
+  text-align: left; /* Align the text of the label to the left */
+}
+
+.left-align-group input {
+  width: 100%; /* Make input take full width */
+  height: 50px;
+}
+
+
+.button-asaldoktrin {
+  display: flex;
+  justify-content: flex-end; 
+  margin-bottom: 0.5em; 
+  margin-top: -50px;
+  margin-right: 80px;
+}
+
+
+
+/* pop-up pdf */
+
+.custom-pdf {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.custom-pdf-content {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap; /* Pastikan ini diatur jika kolom melampaui lebar */
+  margin-right: 20px; /* Atur jika ada margin di dalam form-group */
+}
+
+.form-group {
+  margin-bottom: 15px; /* Atur jarak vertikal antar elemen */
+}
+
+
+.form-group:last-child {
+  margin-right: 0;
+}

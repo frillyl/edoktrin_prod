@@ -1,0 +1,39 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /edoktrin_prod/
+
+    # Remap to the appropriate directory if codeigniter is not in the root directory.
+    # RewriteBase /ci/
+
+    # If you installed CodeIgniter in a subfolder, you will need to
+    # set the `RewriteBase` to the folder you installed CodeIgniter in.
+    # RewriteBase /CodeIgniter/
+
+    # Redirect Trailing Slashes...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Rewrite "www.example.com -> example.com"
+    # Uncomment and properly set "www.example.com" to your site name.
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    # RewriteRule ^ http://%1%{REQUEST_URI} [L,R=301]
+
+    # Checks to see if the user is attempting to access a valid file,
+    # such as an image or css document, if this isn't true it sends the
+    # request to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+
+    # Ensure Authorization header is passed along
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # If we don't have mod_rewrite installed, all 404's
+    # can be sent to index.php, and everything works as normal.
+    ErrorDocument 404 index.php
+</IfModule>
