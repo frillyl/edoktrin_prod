@@ -32,7 +32,7 @@
                         <td>
                             <div class="action-buttons">
                                 <button class="detail-btn" style="background-color: #27A6B1;" data-toggle="modal" data-target="#info<?= $value['id_pencipta'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
-                                <button class="ubahunit"><i class="fa-solid fa-pen"></i> Ubah</button>
+                                <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pencipta'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
                                 <button class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
                             </div>
                         </td>
@@ -44,43 +44,13 @@
 
     <!-- Pagination -->
     <div class="pagination-container">
-        <a href="#" id="openModal" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Data Asal Doktrin</a>
+        <button id="addButton" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Asal Doktrin Baru</button>
         <div class="pagination">
             <button id="prevPage" disabled><i class="fas fa-arrow-left"></i></button>
             <button class="page-button active" data-page="1">1</button>
             <button class="page-button" data-page="2">2</button>
             <button class="page-button" data-page="3">3</button>
             <button id="nextPage"><i class="fas fa-arrow-right"></i></button>
-        </div>
-    </div>
-</div>
-
-<!-- "Tambah" Modal Structure -->
-<div id="addModal" class="custom-modal">
-    <div class="custom-modal-content" style=" margin: 10% auto;">
-        <span class="close-button" id="closeAddModal">&times;</span>
-        <h2 id="addModalTitle" style="margin-top: 30px;">Tambah Data Asal Doktrin</h2>
-        <div class="left-align-group">
-            <label for="asalDoktrinAdd">Asal Doktrin</label>
-            <input type="text" id="asalDoktrinAdd" placeholder="">
-        </div>
-        <div class="modal-buttons" style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
-            <button class="btn btn-success save-modal" id="saveAddModalButton" style="background-color: #8A3A42; color: #ffff;">Tambah</button>
-        </div>
-    </div>
-</div>
-
-<!-- "Ubah" Modal Structure -->
-<div id="editModal" class="custom-modal">
-    <div class="custom-modal-content" style=" margin: 10% auto;">
-        <span class="close-button" id="closeEditModal">&times;</span>
-        <h2 id="editModalTitle" style="margin-top: 30px;">Ubah Data Asal Doktrin</h2>
-        <div class="left-align-group">
-            <label for="asalDoktrinEdit">Asal Doktrin</label>
-            <input type="text" id="asalDoktrinEdit" placeholder="">
-        </div>
-        <div class="modal-buttons" style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
-            <button class="btn btn-success save-modal" id="saveEditModalButton" style="background-color: #8A3A42; color: #ffff;">Simpan</button>
         </div>
     </div>
 </div>
@@ -92,15 +62,84 @@
             <button class="close-btn" onclick="closeDetailModal('info<?= $value['id_pencipta'] ?>')">×</button>
             <h2 style="margin-bottom: 30px; margin-top: 40px; font-weight: 700">Detail Data Asal Doktrin</h2>
             <div class="modal-body">
-                <p><strong>Asal Doktrin</strong> <span id="detailNrp" class="detail-value"></span></p>
-                <p><strong>Ditambahkan Pada</strong> <span id="detailName" class="detail-value"></span></p>
-                <p><strong>Ditambahkan Oleh</strong> <span id="detailUsername" class="detail-value"></span></p>
-                <p><strong>Diubah Pada</strong> <span id="detailRole" class="detail-value"></span></p>
-                <p><strong>Diubah Oleh</strong> <span id="detailAddedOn" class="detail-value"></span></p>
+                <p><strong>Asal Doktrin</strong><span id="detailNrp" class="detail-value"><?= $value['pencipta'] ?></span></p>
+                <p><strong>Ditambahkan Pada</strong><span id="detailName" class="detail-value"><?= date('j F Y H:i:s', strtotime($value['created_at'])) ?></span></p>
+                <p><strong>Ditambahkan Oleh</strong><span id="detailUsername" class="detail-value"><?= $value['created_by_name'] ?></span></p>
+                <p><strong>Diubah Pada</strong><span id="detailRole" class="detail-value"><?php if ($value['edited_at'] == '') : ?>
+                            Data asal doktrin belum pernah diubah.
+                        <?php else : ?>
+                            <?= date('j F Y H:i:s', strtotime($value['edited_at'])) ?>
+                        <?php endif; ?></span></p>
+                <p><strong>Diubah Oleh</strong><span id="detailAddedOn" class="detail-value"><?php if ($value['edited_by'] == 0) : ?>
+                            Data asal doktrin belum pernah diubah.
+                        <?php else : ?>
+                            <?= $value['edited_by_name'] ?>
+                        <?php endif; ?></span></p>
             </div>
         </div>
     </div>
 <?php } ?>
+<!-- END OF MODAL DETAIL ASAL DOKTRIN -->
+
+<!-- MODAL ADD ASAL DOKTRIN -->
+<div class="modal" id="add" style="display:none;">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeCreateModal()">×</button>
+        <h2>Tambah Data Asal Doktrin</h2>
+        <div class="modal-body">
+            <?php
+            echo form_open('master/pencipta/add');
+            ?>
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="pencipta" name="pencipta" placeholder="Pencipta">
+                </div>
+            </div>
+            <!-- Created By -->
+            <div class="input-group">
+                <input type="text" name="created_by" class="form-control" id="created_by" placeholder="Ditambahkan Oleh" value="<?= session('id_pengguna') ?>" hidden>
+            </div>
+            <!-- Submit Button -->
+            <div class="button-container">
+                <button type="submit" class="submit-btn">Create</button>
+            </div>
+            <?php echo form_close() ?>
+        </div>
+    </div>
+</div>
+<!-- END OF MODAL ADD ASAL DOKTRIN -->
+
+<!-- MODAL EDIT ASAL DOKTRIN -->
+<?php foreach ($pencipta as $key => $value) { ?>
+    <div class="modal" id="edit<?= $value['id_pencipta'] ?>" style="display:none;">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeDetailModal('edit<?= $value['id_pencipta'] ?>')">×</button>
+            <h2>Ubah Data Pengguna</h2>
+            <div class="modal-body">
+                <?php
+                echo form_open('master/pencipta/edit/' . $value['id_pencipta']);
+                ?>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="pencipta" name="pencipta" value="<?= $value['pencipta'] ?>" placeholder="Pencipta">
+                    </div>
+                </div>
+                <!-- Edited By -->
+                <div class="input-group">
+                    <input type="text" name="edited_by" value="<?= session('id_pengguna') ?>" class="form-control" id="edited_by" hidden>
+                </div>
+                <!-- Submit Button -->
+                <div class="button-container">
+                    <button type="submit" class="submit-btn">Update</button>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+<!-- END OF MODAL EDIT ASAL DOKTRIN -->
 
 <script>
     function openCreateModal() {
