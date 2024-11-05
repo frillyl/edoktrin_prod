@@ -115,7 +115,7 @@
     <div class="modal" id="edit<?= $value['id_pencipta'] ?>" style="display:none;">
         <div class="modal-content">
             <button class="close-btn" onclick="closeDetailModal('edit<?= $value['id_pencipta'] ?>')">×</button>
-            <h2>Ubah Data Pengguna</h2>
+            <h2>Ubah Data Asal Doktrin</h2>
             <div class="modal-body">
                 <?php
                 echo form_open('master/pencipta/edit/' . $value['id_pencipta']);

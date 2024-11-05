@@ -25,28 +25,20 @@
                 </tr>
             </thead>
             <tbody id="documentTable">
-                <tr>
-                    <td>1</td>
-                    <td>Unit Organisasi A</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="detail-btn"><i class="fa-solid fa-info"></i> Detail</button>
-                            <button class="ubahunit"><i class="fa-solid fa-pen"></i> Ubah</button>
-                            <button class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Unit Organisasi B</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="detail-btn"><i class="fa-solid fa-info"></i> Detail</button>
-                            <button class="ubahunit"><i class="fa-solid fa-pen"></i> Ubah</button>
-                            <button class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
-                        </div>
-                    </td>
-                </tr>
+                <?php $no = 1;
+                foreach ($unit as $key => $value) { ?>
+                    <tr>
+                        <td><?= $no++ ?>.</td>
+                        <td><?= $value['unit'] ?></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="detail-btn" style="background-color: #27A6B1;" data-toggle="modal" data-target="#info<?= $value['id_unit'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
+                                <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_unit'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
+                                <button class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>
@@ -55,7 +47,7 @@
 
     <!-- Pagination -->
     <div class="pagination-container">
-        <a href="#" id="openModalLink" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Data Unit Organisasi</a>
+        <button id="addButton" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Unit Organisasi Baru</button>
         <div class="pagination">
             <button id="prevPage" disabled><i class="fas fa-arrow-left"></i></button>
             <button class="page-button active" data-page="1">1</button>
@@ -65,207 +57,201 @@
         </div>
     </div>
 
-    <!-- "Tambah" Modal Structure -->
-    <div id="addModal" class="custom-modal">
-        <div class="custom-modal-content">
-            <span class="close-button" id="closeAddModal">&times;</span>
-            <h2 id="addModalTitle" style="margin-top: 30px;">Tambah Data Jenis Doktrin</h2>
-            <div class="left-align-group">
-                <label for="unitOrganisasiAdd">Unit Organisasi</label>
-                <input type="text" id="unitOrganisasiAdd" placeholder="">
-            </div>
-            <div class="modal-buttons" style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
-                <button class="btn btn-success save-modal" id="saveAddModalButton" style="background-color: #8A3A42; color: #ffff;">Tambah</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- "Ubah" Modal Structure -->
-    <div id="editModal" class="custom-modal">
-        <div class="custom-modal-content">
-            <span class="close-button" id="closeEditModal">&times;</span>
-            <h2 id="editModalTitle" style="margin-top: 30px;">Ubah Data Unit Organisasi</h2>
-            <div class="left-align-group">
-                <label for="unitOrganisasiEdit">Unit Organisasi</label>
-                <input type="text" id="unitOrganisasiEdit" placeholder="">
-            </div>
-            <div class="modal-buttons" style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
-                <button class="btn btn-success save-modal" id="saveEditModalButton" style="background-color: #8A3A42; color: #ffff;">Simpan</button>
+    <!-- MODAL DETAIL UNIT ORGANISASI  -->
+    <?php foreach ($unit as $key => $value) { ?>
+        <div class="modal" id="info<?= $value['id_unit'] ?>">
+            <div class="modal-content" style=" margin: 10% auto;">
+                <button class="close-btn" onclick="closeDetailModal('info<?= $value['id_unit'] ?>')">×</button>
+                <h2 style="margin-bottom: 30px; margin-top: 40px; font-weight: 700">Detail Data Unit Organisasi</h2>
+                <div class="modal-body">
+                    <p><strong>Unit Organisasi</strong><span id="detailNrp" class="detail-value"><?= $value['unit'] ?></span></p>
+                    <p><strong>Ditambahkan Pada</strong><span id="detailName" class="detail-value"><?= date('j F Y H:i:s', strtotime($value['created_at'])) ?></span></p>
+                    <p><strong>Ditambahkan Oleh</strong><span id="detailUsername" class="detail-value"><?= $value['created_by_name'] ?></span></p>
+                    <p><strong>Diubah Pada</strong><span id="detailRole" class="detail-value"><?php if ($value['edited_at'] == '') : ?>
+                                Data unit organisasi belum pernah diubah.
+                            <?php else : ?>
+                                <?= date('j F Y H:i:s', strtotime($value['edited_at'])) ?>
+                            <?php endif; ?></span></p>
+                    <p><strong>Diubah Oleh</strong><span id="detailAddedOn" class="detail-value"><?php if ($value['edited_by'] == 0) : ?>
+                                Data unit organisasi belum pernah diubah.
+                            <?php else : ?>
+                                <?= $value['edited_by_name'] ?>
+                            <?php endif; ?></span></p>
+                </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
+    <!-- END OF MODAL DETAIL UNIT ORGANISASI -->
 
-    <!-- Modal Detail -->
-    <div class="modal" id="detailModal">
+    <!-- MODAL ADD UNIT ORGANISASI -->
+    <div class="modal" id="add" style="display:none;">
         <div class="modal-content">
-            <span class="close-button" id="closeDetailModal">&times;</span>
-            <h2 style="margin-bottom: 30px; margin-top: 40px; font-weight: 700">Detail Data Unit Organisasi</h2>
+            <button class="close-btn" onclick="closeCreateModal()">×</button>
+            <h2>Tambah Data Unit Organisasi</h2>
             <div class="modal-body">
-                <p><strong>Unit Organisasi:</strong> <span class="detail-value"></span></p>
-                <p><strong>Ditambahkan Pada:</strong> <span class="detail-value"></span></p>
-                <p><strong>Ditambahkan Oleh:</strong> <span class="detail-value"></span></p>
-                <p><strong>Diubah Pada:</strong> <span class="detail-value"></span></p>
-                <p><strong>Diubah Oleh:</strong> <span class="detail-value"></span></p>
+                <?php
+                echo form_open('master/unit/add');
+                ?>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="unit" name="unit" placeholder="Unit Organisasi">
+                    </div>
+                </div>
+                <!-- Created By -->
+                <div class="input-group">
+                    <input type="text" name="created_by" class="form-control" id="created_by" placeholder="Ditambahkan Oleh" value="<?= session('id_pengguna') ?>" hidden>
+                </div>
+                <!-- Submit Button -->
+                <div class="button-container">
+                    <button type="submit" class="submit-btn">Create</button>
+                </div>
+                <?php echo form_close() ?>
             </div>
         </div>
     </div>
+    <!-- END OF MODAL ADD UNIT ORGANISASI -->
 
-
-
+    <!-- MODAL EDIT UNIT ORGANISASI -->
+    <?php foreach ($unit as $key => $value) { ?>
+        <div class="modal" id="edit<?= $value['id_unit'] ?>" style="display:none;">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeDetailModal('edit<?= $value['id_unit'] ?>')">×</button>
+                <h2>Ubah Data Unit Organisasi</h2>
+                <div class="modal-body">
+                    <?php
+                    echo form_open('master/unit/edit/' . $value['id_unit']);
+                    ?>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="unit" name="unit" value="<?= $value['unit'] ?>" placeholder="Unit Organisasi">
+                        </div>
+                    </div>
+                    <!-- Edited By -->
+                    <div class="input-group">
+                        <input type="text" name="edited_by" value="<?= session('id_pengguna') ?>" class="form-control" id="edited_by" hidden>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="button-container">
+                        <button type="submit" class="submit-btn">Update</button>
+                    </div>
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <!-- END OF MODAL EDIT UNIT ORGANISASI -->
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Function to open the "Tambah" modal
-        function openCreateModal() {
-            document.getElementById("addModal").style.display = "flex";
-        }
+    function openCreateModal() {
+        document.getElementById("add").style.display = "flex";
+    }
 
-        function closeCreateModal() {
-            document.getElementById("addModal").style.display = "none";
-        }
-        document.getElementById("openModalLink").addEventListener("click", function(event) {
-            event.preventDefault();
+    function closeCreateModal() {
+        document.getElementById("add").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("addButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Mencegah reload halaman
             openCreateModal();
         });
-        document.getElementById("closeAddModal").addEventListener("click", function() {
-            closeCreateModal();
-        });
+    });
 
-        // Function to open the "Ubah" modal
-        function openEditModal() {
-            document.getElementById("editModal").style.display = "flex";
-        }
 
-        function closeEditModal() {
-            document.getElementById("editModal").style.display = "none";
-        }
+    // membuka modal ubah
+    function openEditModal(id) {
+        document.getElementById(id).style.display = "flex"; // Menampilkan modal
+    }
+
+    function closeEditModal() {
+        document.getElementById(id).style.display = "none"; // Menyembunyikan modal
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".ubahunit").forEach(button => {
             button.addEventListener("click", function(event) {
                 event.preventDefault();
-                openEditModal();
+                const modalId = this.getAttribute("data-target").substring(1); // Ambil ID modal dari atribut data-target
+                openEditModal(modalId); // Panggil openDetailModal dengan ID yang tepat
             });
         });
-        document.getElementById("closeEditModal").addEventListener("click", function() {
-            closeEditModal();
-        });
+    });
+    // Fungsi untuk membuka modal detail 
+    function openDetailModal(id) {
+        document.getElementById(id).style.display = "flex"; // Tampilkan modal dengan ID yang sesuai
+    }
 
-        // Function to open the "Detail" modal
-        function openDetailModal() {
-            document.getElementById("detailModal").style.display = "flex";
-        }
 
-        function closeDetailModal() {
-            document.getElementById("detailModal").style.display = "none";
-        }
+    function closeDetailModal(id) {
+        document.getElementById(id).style.display = "none"; // Sembunyikan modal dengan ID yang sesuai
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".detail-btn").forEach(button => {
             button.addEventListener("click", function(event) {
                 event.preventDefault();
-                openDetailModal();
-                // Optionally, you can fill the detail modal with dynamic data here
+                const modalId = this.getAttribute("data-target").substring(1); // Ambil ID modal dari atribut data-target
+                openDetailModal(modalId); // Panggil openDetailModal dengan ID yang tepat
             });
-        });
-        document.getElementById("closeDetailModal").addEventListener("click", function() {
-            closeDetailModal();
         });
     });
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const rowsPerPage = 10; // Set number of rows per page
-        const rows = document.querySelectorAll('#documentTable tr'); // Select all table rows
-        const totalRows = rows.length; // Total number of rows
-        const totalPages = Math.ceil(totalRows / rowsPerPage); // Total pages based on rows per page
-        let currentPage = 1; // Start on the first page
+    //javascript untuk pagination
+    document.addEventListener('DOMContentLoaded', function() {
+        const rowsPerPage = 10; // Ubah angka ini untuk mengatur jumlah data per halaman
+        let currentPage = 1;
+        const tableBody = document.getElementById('documentTable');
+        const rows = Array.from(tableBody.getElementsByTagName('tr')); // Mengambil semua baris data
 
         function displayPage(page) {
-            // Hide all rows
-            rows.forEach((row) => {
-                row.style.display = 'none';
-            });
-
-            // Calculate start and end row indices
             const start = (page - 1) * rowsPerPage;
             const end = start + rowsPerPage;
 
-            // Show rows for the current page
-            for (let i = start; i < end && i < totalRows; i++) {
-                rows[i].style.display = ''; // Show the row
-            }
-
-            // Update active page button
-            document.querySelectorAll('.page-button').forEach(button => {
-                button.classList.remove('active');
+            rows.forEach((row, index) => {
+                row.style.display = (index >= start && index < end) ? '' : 'none';
             });
-            const activeButton = document.querySelector(`.page-button[data-page="${page}"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
-
-            // Enable/disable pagination buttons
-            document.getElementById('prevPage').disabled = page === 1; // Disable if on the first page
-            document.getElementById('nextPage').disabled = page === totalPages; // Disable if on the last page
         }
 
-        // Event listeners for pagination buttons
+        function updatePaginationButtons() {
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === Math.ceil(rows.length / rowsPerPage);
+
+            // Update status tombol page-button
+            document.querySelectorAll('.page-button').forEach(button => {
+                button.classList.toggle('active', parseInt(button.getAttribute('data-page')) === currentPage);
+            });
+        }
+
+        // Event listener untuk tombol page-button
         document.querySelectorAll('.page-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const page = parseInt(button.getAttribute('data-page')); // Get the page number
-                currentPage = page; // Update the current page
-                displayPage(currentPage); // Display the rows for the current page
+            button.addEventListener('click', function() {
+                currentPage = parseInt(this.getAttribute('data-page'));
+                displayPage(currentPage);
+                updatePaginationButtons();
             });
         });
 
-        // Previous page button functionality
-        document.getElementById('prevPage').addEventListener('click', () => {
+        // Event listener untuk tombol Previous dan Next
+        document.getElementById('prevPage').addEventListener('click', function() {
             if (currentPage > 1) {
-                currentPage--; // Decrement current page
-                displayPage(currentPage); // Display the new current page
+                currentPage--;
+                displayPage(currentPage);
+                updatePaginationButtons();
             }
         });
 
-        // Next page button functionality
-        document.getElementById('nextPage').addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++; // Increment current page
-                displayPage(currentPage); // Display the new current page
+        document.getElementById('nextPage').addEventListener('click', function() {
+            if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+                currentPage++;
+                displayPage(currentPage);
+                updatePaginationButtons();
             }
         });
 
-        // Initial display
+        // Tampilkan halaman pertama pada saat halaman dimuat
         displayPage(currentPage);
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll(".delete-btn").forEach(button => {
-            button.addEventListener("click", function(event) {
-                event.preventDefault();
-                // Show SweetAlert confirmation
-                Swal.fire({
-                    text: "Apakah Anda Yakin Ingin Menghapus Data Pengguna?",
-                    showCancelButton: true,
-                    confirmButtonColor: "#8A3A42",
-                    cancelButtonColor: "grey",
-                    confirmButtonText: "Hapus",
-                    cancelButtonText: "Batal",
-                    customClass: {
-                        actions: 'swal2-actions-right' // Custom class for button alignment
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Handle deletion logic here
-                        const row = this.closest('tr'); // Get the row of the button clicked
-                        row.remove(); // Remove the row
-
-                        // Show success message
-                        Swal.fire({
-                            title: "Berhasil Dihapus",
-                            icon: "success"
-                        });
-                    }
-                });
-            });
-        });
+        updatePaginationButtons();
     });
 </script>
