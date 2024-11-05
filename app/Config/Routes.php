@@ -30,5 +30,8 @@ $routes->post('master/unit/edit/(:segment)', 'Master::edit_unit/$1');
 $routes->get('master/unit/delete/(:segment)', 'Master::delete_unit/$1');
 // Master Jenis Doktrin
 $routes->get('/master/klasifikasi', 'Master::index_klasifikasi');
+$routes->post('master/klasifikasi/add', 'Master::add_klasifikasi');
+$routes->post('master/klasifikasi/edit/(:segment)', 'Master::edit_klasifikasi/$1');
+$routes->get('master/klasifikasi/delete/(:segment)', 'Master::delete_klasifikasi/$1');
 // Manajemen Arsip
 $routes->get('/manajemen/arsip', 'Arsip::index');
