@@ -60,7 +60,7 @@
                             <div class="action-buttons">
                                 <button class="detail-btn" style="background-color: #27A6B1;" data-toggle="modal" data-target="#info<?= $value['id_klasifikasi'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
                                 <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_klasifikasi'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                <button class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="delete-btn" data-id="<?= $value['id_klasifikasi'] ?>" data-name="<?= $value['klasifikasi'] ?>"><i class="fas fa-trash"></i> Hapus</button>
                             </div>
                         </td>
                     </tr>
@@ -340,5 +340,28 @@
         // Tampilkan halaman pertama pada saat halaman dimuat
         displayPage(currentPage);
         updatePaginationButtons();
+    });
+
+    // Event listener untuk tombol delete
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const name = this.dataset.name;
+
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: `Ingin menghapus data jenis doktrin "${name}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('master/klasifikasi/delete/') ?>" + id;
+                }
+            });
+        });
     });
 </script>

@@ -39,7 +39,7 @@
                             <div class="action-buttons">
                                 <button class="detail-btn" data-toggle="modal" data-target="#info<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
                                 <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                <button class="delete-btn" data-toggle="modal" data-target="#delete<?= $value['id_pengguna'] ?>"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="delete-btn" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fas fa-trash"></i> Hapus</button>
                                 <?php if ($value['id_pengguna'] != session('id_pengguna')) : ?>
                                     <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#resetPassword<?= $value['id_pengguna'] ?>"><i class="fas fa-key"></i> Reset Password</button>
                                 <?php endif; ?>
@@ -347,5 +347,28 @@
         // Tampilkan halaman pertama pada saat halaman dimuat
         displayPage(currentPage);
         updatePaginationButtons();
+    });
+
+    // Event listener untuk tombol delete
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const name = this.dataset.name;
+
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: `Ingin menghapus data pengguna "${name}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "<?= base_url('master/pengguna/delete/') ?>" + id;
+                }
+            });
+        });
     });
 </script>
