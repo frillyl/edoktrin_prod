@@ -5,7 +5,7 @@
                 <div class="card-body p-3">
                     <div class="row align-items-center justify-content-between">
                         <div class="col">
-                            <h2><b>Selamat Datang, Admin!</b></h2>
+                            <h2 class="greetings"><b>Selamat Datang, Admin!</b></h2>
                             <p style="color: white;">
                                 Lorem Ipsum is a standard placeholder text used in the printing and typesetting industry.
                                 It serves to demonstrate visual elements such as fonts and layouts without the distraction of meaningful content.

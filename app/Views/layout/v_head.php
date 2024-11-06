@@ -18,5 +18,5 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.4.20/sweetalert2.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url() ?>/public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= base_url() ?>public/assets/css/style.css">
 </head>

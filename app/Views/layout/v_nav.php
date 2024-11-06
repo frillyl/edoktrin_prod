@@ -16,7 +16,7 @@
 
 
   <li>
-    <a href="<?= base_url('master/klasifikasi'); ?>">Arsip</a>
+    <a href="<?= base_url('manajemen/arsip'); ?>">Arsip</a>
   </li>
 </ul>
 

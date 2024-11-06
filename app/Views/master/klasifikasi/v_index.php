@@ -86,7 +86,7 @@
 <!-- MODAL DETAIL JENIS DOKTRIN  -->
 <?php foreach ($klasifikasi as $key => $value) { ?>
     <div class="modal" id="info<?= $value['id_klasifikasi'] ?>">
-        <div class="modal-content" style=" margin: 10% auto;">
+        <div class="modal-content" style=" margin: 8% auto;">
             <button class="close-btn" onclick="closeDetailModal('info<?= $value['id_klasifikasi'] ?>')">×</button>
             <h2 style="margin-bottom: 30px; margin-top: 40px; font-weight: 700">Detail Data jenis doktrin</h2>
             <div class="modal-body">
@@ -268,23 +268,42 @@
     });
     // Fungsi untuk membuka modal detail 
     function openDetailModal(id) {
-        document.getElementById(id).style.display = "flex"; // Tampilkan modal dengan ID yang sesuai
+        document.getElementById(id).style.display = "block"; // Tampilkan modal dengan ID yang sesuai
     }
-
 
     function closeDetailModal(id) {
         document.getElementById(id).style.display = "none"; // Sembunyikan modal dengan ID yang sesuai
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        // Menambahkan event listener untuk setiap tombol dengan kelas .detail-btn
         document.querySelectorAll(".detail-btn").forEach(button => {
             button.addEventListener("click", function(event) {
-                event.preventDefault();
-                const modalId = this.getAttribute("data-target").substring(1); // Ambil ID modal dari atribut data-target
-                openDetailModal(modalId); // Panggil openDetailModal dengan ID yang tepat
+                event.preventDefault(); // Mencegah aksi default dari tombol (misalnya, form submit)
+                const modalId = this.getAttribute("data-target").substring(1); // Ambil ID modal dari atribut data-target (menghapus karakter '#' di depan ID)
+                openDetailModal(modalId); // Panggil openDetailModal dengan ID modal yang tepat
+            });
+        });
+
+        // Menambahkan event listener untuk tombol close modal (misalnya, tombol dengan ID "closeDetailModal")
+        document.querySelectorAll(".close-modal-btn").forEach(button => {
+            button.addEventListener("click", function(event) {
+                const modalId = this.closest(".modal").id; // Ambil ID modal terdekat dari tombol close
+                closeDetailModal(modalId); // Panggil closeDetailModal untuk modal yang sesuai
+            });
+        });
+
+        // Menutup modal jika mengklik area luar modal
+        window.addEventListener("click", function(event) {
+            // Periksa jika klik terjadi pada elemen modal itu sendiri
+            document.querySelectorAll(".modal").forEach(modal => {
+                if (event.target === modal) {
+                    closeDetailModal(modal.id); // Tutup modal jika klik di luar area modal
+                }
             });
         });
     });
+
     //javascript untuk pagination
     document.addEventListener('DOMContentLoaded', function() {
         const rowsPerPage = 10; // Ubah angka ini untuk mengatur jumlah data per halaman

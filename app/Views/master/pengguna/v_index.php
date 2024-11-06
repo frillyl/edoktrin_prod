@@ -38,10 +38,10 @@
                         <td>
                             <div class="action-buttons">
                                 <button class="detail-btn" data-toggle="modal" data-target="#info<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
-                                <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                <button class="delete-btn" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fas fa-trash"></i> Hapus</button>
                                 <?php if ($value['id_pengguna'] != session('id_pengguna')) : ?>
                                     <button class="resetpassword" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fa-solid fa-key"></i> ResetPassword</button>
+                                    <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
+                                    <button class="delete-btn" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fas fa-trash"></i> Hapus</button>
                                 <?php endif; ?>
                             </div>
                         </td>
