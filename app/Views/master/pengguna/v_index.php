@@ -41,7 +41,7 @@
                                 <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
                                 <button class="delete-btn" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fas fa-trash"></i> Hapus</button>
                                 <?php if ($value['id_pengguna'] != session('id_pengguna')) : ?>
-                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#resetPassword<?= $value['id_pengguna'] ?>"><i class="fas fa-key"></i> Reset Password</button>
+                                    <button class="resetpassword" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fa-solid fa-key"></i> ResetPassword</button>
                                 <?php endif; ?>
                             </div>
                         </td>
@@ -236,6 +236,7 @@
             </div>
         </div>
     <?php } ?>
+    <!-- END OF MODAL EDIT PENGGUNA -->
 </div>
 
 <script>
@@ -368,6 +369,33 @@
                 if (result.isConfirmed) {
                     window.location.href = "<?= base_url('master/pengguna/delete/') ?>" + id;
                 }
+            });
+        });
+    });
+
+    // Reset Password
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".resetpassword").forEach(button => {
+            button.addEventListener("click", function() {
+                const id = this.getAttribute("data-id");
+                const name = this.getAttribute("data-name");
+
+                // SweetAlert konfirmasi reset password
+                Swal.fire({
+                    title: 'Reset Password',
+                    text: `Apakah Anda yakin ingin mereset password untuk pengguna "${name}"? Password akan direset ke default.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Reset Password',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect ke URL reset password
+                        window.location.href = "<?= base_url('master/pengguna/reset_password/') ?>" + id;
+                    }
+                });
             });
         });
     });
