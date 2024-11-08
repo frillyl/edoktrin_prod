@@ -102,11 +102,11 @@ class Arsip extends BaseController
             ],
             'nama_file' => [
                 'label' => 'File',
-                'rules' => 'uploaded[nama_file]|max_size[nama_file,51200]|mime_in[nama_file,application/pdf,image/jpeg,image/png]',
+                'rules' => 'uploaded[nama_file]|max_size[nama_file,51200]|mime_in[nama_file,application/pdf,image/jpeg,image/jpg,image/png,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
                 'errors' => [
                     'uploaded' => '{field} harus berupa file!',
                     'max_size' => '{field} maksimal 50MB!',
-                    'mime_in' => '{field} hanya berupa file PDF, JPEG, dan PNG!'
+                    'mime_in' => '{field} hanya berupa file PDF, JPEG, PNG, DOC, dan DOCX!'
                 ]
             ],
             'created_by' => [
@@ -124,25 +124,32 @@ class Arsip extends BaseController
                 $filePath = WRITEPATH . 'uploads/' . $fileName;
 
                 if ($fileType === 'application/pdf') {
-                    // Jika file sudah PDF, simpan langsung
+                    // Jika sudah PDF, simpan langsung
                     $file->move(WRITEPATH . 'uploads', $fileName);
-                } else {
-                    // Konversi file ke PDF berdasarkan tipe
-                    if ($fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-                        $phpWord = IOFactory::load($file->getTempName());
-                        $pdfFile = WRITEPATH . 'uploads/' . pathinfo($fileName, PATHINFO_FILENAME) . '.pdf';
-                        $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
-                        $pdfWriter->save($pdfFile);
-                        $filePath = $pdfFile;
-                    }
-                }
-
-                // Ekstrak teks dari file
-                $text = '';
-                if (file_exists($filePath) && $fileType === 'application/pdf') {
                     $text = $this->extractTextFromPDF($filePath);
+                } elseif ($fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    // Konversi .docx ke PDF
+                    $phpWord = IOFactory::load($file->getTempName());
+                    $pdfFile = WRITEPATH . 'uploads/' . pathinfo($fileName, PATHINFO_FILENAME) . '.pdf';
+                    $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
+                    $pdfWriter->save($pdfFile);
+
+                    // Update path ke file PDF hasil konversi
+                    $filePath = $pdfFile;
+
+                    // Ekstraksi teks dari file PDF hasil konversi
+                    if (file_exists($filePath)) {
+                        $text = $this->extractTextFromPDF($filePath);
+                    } else {
+                        $text = '';
+                        session()->setFlashdata('error', 'Gagal mengekstrak teks dari file yang dikonversi.');
+                    }
+                } else {
+                    session()->setFlashdata('error', 'Format file tidak didukung untuk diunggah.');
+                    return redirect()->to(base_url('manajemen/arsip'));
                 }
 
+                // Data untuk disimpan ke database
                 $data = [
                     'no_arsip' => $this->request->getPost('no_arsip'),
                     'tgl_doktrin' => $this->request->getPost('tgl_doktrin'),

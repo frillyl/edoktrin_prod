@@ -31,9 +31,9 @@
                         <td><?= $value['pencipta'] ?></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="detail-btn" style="background-color: #27A6B1;" data-toggle="modal" data-target="#info<?= $value['id_pencipta'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
-                                <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pencipta'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                <button class="delete-btn" data-id="<?= $value['id_pencipta'] ?>" data-name="<?= $value['pencipta'] ?>"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_pencipta'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
+                                <button class="ubahunit" data-toggle="tooltip" data-target="#edit<?= $value['id_pencipta'] ?>" title="Edit Data"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" data-toggle="tooltip" data-id="<?= $value['id_pencipta'] ?>" data-name="<?= $value['pencipta'] ?>" title="Hapus Data"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>

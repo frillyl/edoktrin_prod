@@ -17,14 +17,18 @@
         </div>
     </div>
 
-    <div class="card-table">
-        <table>
+    <div class="card-table table-responsive">
+        <table class="table">
             <thead>
                 <tr>
                     <th>No.</th>
+                    <th>Nomor Doktrin</th>
+                    <th>Tanggal Doktrin</th>
+                    <th>Tanggal Masuk</th>
                     <th>Asal Doktrin</th>
-                    <th class="judul-dokumen">Nomor Doktrin</th>
                     <th>Jenis Doktrin</th>
+                    <th>Unit Organisasi</th>
+                    <th>Perihal</th>
                     <th style="text-align: center;">Aksi</th>
                 </tr>
             </thead>
@@ -33,16 +37,20 @@
                 foreach ($arsip as $key => $value) { ?>
                     <tr>
                         <td><?= $no++ ?>.</td>
-                        <td><?= $value['pencipta'] ?></td>
                         <td><?= $value['no_arsip'] ?></td>
+                        <td><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></td>
+                        <td><?= date('j F Y', strtotime($value['tgl_masuk'])) ?></td>
+                        <td><?= $value['pencipta'] ?></td>
                         <td><?= $value['klasifikasi'] ?></td>
+                        <td><?= $value['unit'] ?></td>
+                        <td><?= $value['perihal'] ?></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="detail-btn" style="background-color: #27A6B1;" data-toggle="modal" data-target="#info<?= $value['id_klasifikasi'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
-                                <button id="openEditModal" class="ubahunit"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                <button id="openDeleteModal" class="delete-btn"><i class="fas fa-trash"></i> Hapus</button>
-                                <button id="openPdfModal" class="show-pdf" data-pdf="<?= base_url('assets/pdf/jurnal.pdf'); ?>">
-                                    <i class="fa-solid fa-file-pdf"></i> Tampilkan PDF
+                                <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_klasifikasi'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
+                                <button id="openEditModal" data-toggle="tooltip" class="ubahunit" title="Edit Data"><i class="fa-solid fa-pen"></i></button>
+                                <button id="openDeleteModal" data-toggle="tooltip" class="delete-btn" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                                <button id="openPdfModal" data-toggle="tooltip" class="show-pdf" data-pdf="<?= base_url('assets/pdf/jurnal.pdf'); ?>" title="Lihat PDF">
+                                    <i class="fa-solid fa-file-pdf"></i>
                                 </button>
                             </div>
                         </td>
@@ -53,108 +61,13 @@
     </div>
 
     <div class="pagination-container">
-        <a href="#" id="openAddModal" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Data Asal Doktrin</a>
+        <button id="addButton" class="btn create-btn" style="background-color: #8A3A42; color: #ffff;">Tambah Arsip</button>
         <div class="pagination">
             <button id="prevPage" disabled><i class="fas fa-arrow-left"></i></button>
             <button class="page-button active" data-page="1">1</button>
             <button class="page-button" data-page="2">2</button>
             <button class="page-button" data-page="3">3</button>
             <button id="nextPage"><i class="fas fa-arrow-right"></i></button>
-        </div>
-    </div>
-
-</div>
-
-<!-- Modal input arsip -->
-<div id="myCustomModal" class="custom-modal">
-    <div class="custom-modal-dialog">
-        <div class="custom-modal-header">
-            <h5 class="custom-modal-title">Tambah Data Arsip</h5>
-            <button type="button" class="close-arsip" id="closeModalBtn" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="custom-modal-body">
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nomor-doktrin">Nomor Doktrin</label>
-                        <input type="text" id="nomor-doktrin" placeholder="Nomor Doktrin" class="input-arsip1">
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal-doktrin">Tanggal Doktrin</label>
-                        <input type="date" id="tanggal-doktrin" class="input-arsip1">
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal-doktrin-masuk">Tanggal Doktrin Masuk</label>
-                        <input type="date" id="tanggal-doktrin-masuk" class="input-arsip1">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="select-doktrin">Asal Doktrin</label>
-                        <div class="custom-select">
-                            <div class="select-selected">
-                                Jenis Doktrin
-                                <span class="dropdown-icon"></span>
-                            </div>
-                            <div class="select-items">
-                                <div data-value="">option 1</div>
-                                <div data-value="">option 2</div>
-                                <div data-value="">option 3</div>
-                                <div data-value="">option 4</div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="select-doktrin">Jenis Doktrin</label>
-                        <div class="custom-select">
-                            <div class="select-selected">
-                                Jenis Doktrin
-                                <span class="dropdown-icon"></span>
-                            </div>
-                            <div class="select-items">
-                                <div data-value="JUKREF">JUKREF</div>
-                                <div data-value="JUKGAR">JUKGAR</div>
-                                <div data-value="JUKNIS">JUKNIS</div>
-                                <div data-value="DOKTRIN">DOKTRIN</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="jenis-doktrin-edit">Unit Organisasi</label>
-                        <div class="custom-select">
-                            <div class="select-selected">
-                                Jenis Doktrin
-                                <span class="dropdown-icon"></span>
-                            </div>
-                            <div class="select-items">
-                                <div data-value="KEMHAN">KEMHAN</div>
-                                <div data-value="MABES TNI">MABES TNI</div>
-                                <div data-value="TNI AD">TNI AD</div>
-                                <div data-value="TNI AU">TNI AU</div>
-                                <div data-value="TNI AL">TNI AL</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group full-width">
-                        <label for="perihal">Perihal</label>
-                        <textarea id="perihal" placeholder="Perihal" class="input-arsip"></textarea>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group full-width">
-                        <label for="lampiran">Lampiran</label>
-                        <input type="file" id="lampiran" class="input-arsip">
-                    </div>
-                </div>
-                <div class="modal-buttons" style="margin-top: 30px; display: flex; align-items: center; justify-content: center;">
-                    <button class="btn btn-success save-modal" id="saveEditModalButton" style="background-color: #8A3A42; color: #ffff;">Tambah</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
@@ -287,6 +200,94 @@
 <?php } ?>
 <!-- END OF MODAL DETAIL ARSIP -->
 
+<!-- MODAL ADD ARSIP -->
+<div id="add" class="custom-modal">
+    <div class="custom-modal-dialog">
+        <div class="custom-modal-header">
+            <h5 class="custom-modal-title">Tambah Data Arsip</h5>
+            <button type="button" class="close-arsip" onclick="closeCreateModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="custom-modal-body">
+            <?php
+            echo form_open_multipart('manajemen/arsip/add', ['id' => 'form-arsip']);
+            ?>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nomor-doktrin">Nomor Doktrin</label>
+                    <input type="text" id="nomor-doktrin" name="no_arsip" placeholder="Nomor Doktrin" class="input-arsip1">
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-doktrin">Tanggal Doktrin</label>
+                    <input type="date" id="tanggal-doktrin" name="tgl_doktrin" class="input-arsip1">
+                </div>
+                <div class="form-group">
+                    <label for="tanggal-doktrin-masuk">Tanggal Doktrin Masuk</label>
+                    <input type="date" id="tanggal-doktrin-masuk" name="tgl_masuk" class="input-arsip1">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="select-doktrin">Asal Doktrin</label>
+                    <div class="custom-select" data-input-id="hidden-id-pencipta">
+                        <div class="select-selected">Pilih Asal Doktrin<span class="dropdown-icon"></span></div>
+                        <div class="select-items">
+                            <?php foreach ($pencipta as $key => $value) { ?>
+                                <div value="<?= $value['id_pencipta'] ?>"><?= $value['pencipta'] ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id_pencipta" id="hidden-id-pencipta">
+                <div class="form-group">
+                    <label for="select-doktrin">Jenis Doktrin</label>
+                    <div class="custom-select" data-input-id="hidden-id-klasifikasi">
+                        <div class="select-selected">Pilih Jenis Doktrin<span class="dropdown-icon"></span></div>
+                        <div class="select-items">
+                            <?php foreach ($klasifikasi as $key => $value) { ?>
+                                <div value="<?= $value['id_klasifikasi'] ?>"><?= $value['kode'] ?> - <?= $value['klasifikasi'] ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id_klasifikasi" id="hidden-id-klasifikasi">
+                <div class="form-group">
+                    <label for="jenis-doktrin-edit">Unit Organisasi</label>
+                    <div class="custom-select" data-input-id="hidden-id-unit">
+                        <div class="select-selected">Pilih Unit Organisasi<span class="dropdown-icon"></span></div>
+                        <div class="select-items">
+                            <?php foreach ($unit as $key => $value) { ?>
+                                <div value="<?= $value['id_unit'] ?>"><?= $value['unit'] ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id_unit" id="hidden-id-unit">
+            </div>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="perihal">Perihal</label>
+                    <textarea id="perihal" name="perihal" placeholder="Perihal" class="input-arsip"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="lampiran">Lampiran</label>
+                    <input type="file" class="input-arsip" id="lampiran" name="nama_file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="created_by" class="form-control" id="created_by" placeholder="Ditambahkan Oleh" value="<?= session('id_pengguna') ?>" hidden>
+            </div>
+            <div class="modal-buttons" style="margin-top: 30px; display: flex; align-items: center; justify-content: center;">
+                <button type="submit" class="btn btn-success save-modal" id="saveEditModalButton" style="background-color: #8A3A42; color: #ffff;">Tambah</button>
+            </div>
+            <?php echo form_close() ?>
+        </div>
+    </div>
+</div>
+<!-- END OF MODAL ADD ARSIP -->
 
 <!-- Modal for displaying PDF -->
 <div id="pdfModal" class="custom-modal">
@@ -326,14 +327,54 @@
         document.getElementById("add").style.display = "flex";
     }
 
+    // Fungsi untuk menutup modal
     function closeCreateModal() {
         document.getElementById("add").style.display = "none";
     }
 
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("addButton").addEventListener("click", function(event) {
-            event.preventDefault(); // Mencegah reload halaman
+            event.preventDefault();
             openCreateModal();
+        });
+
+        // Menutup dropdown saat mengklik di luar elemen dropdown
+        document.addEventListener("click", function() {
+            document.querySelectorAll('.select-items.open').forEach(openItems => {
+                openItems.classList.remove('open');
+            });
+            document.querySelectorAll('.select-selected.open').forEach(openSelected => {
+                openSelected.classList.remove('open');
+            });
+        });
+
+        const selects = document.querySelectorAll('.custom-select');
+
+        selects.forEach(select => {
+            const selected = select.querySelector('.select-selected');
+            const items = select.querySelector('.select-items');
+            const hiddenInputId = select.getAttribute('data-input-id'); // Mendapatkan id dari atribut data-input-id
+            const hiddenInput = document.getElementById(hiddenInputId);
+
+            // Toggle tampilan dropdown saat elemen selected diklik
+            selected.addEventListener('click', function(e) {
+                e.stopPropagation(); // Mencegah klik di luar menutup dropdown saat diklik
+                items.classList.toggle('open');
+                selected.classList.toggle('open');
+            });
+
+            // Pilih opsi dan tutup dropdown
+            items.querySelectorAll('div').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Mencegah propagasi agar dropdown tidak tertutup sebelum opsi dipilih
+                    selected.textContent = this.textContent;
+                    items.classList.remove('open'); // Tutup dropdown
+                    selected.classList.remove('open'); // Reset ikon
+
+                    // Set nilai ke hidden input agar bisa dikirim melalui form
+                    hiddenInput.value = this.getAttribute('value');
+                });
+            });
         });
     });
 

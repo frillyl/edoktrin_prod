@@ -35,3 +35,14 @@ $routes->post('master/klasifikasi/edit/(:segment)', 'Master::edit_klasifikasi/$1
 $routes->get('master/klasifikasi/delete/(:segment)', 'Master::delete_klasifikasi/$1');
 // Manajemen Arsip
 $routes->get('/manajemen/arsip', 'Arsip::index');
+$routes->post('manajemen/arsip/add', 'Arsip::add');
+$routes->get('/manajemen/arsip/preview/(:any)', function ($fileName) {
+    $path = WRITEPATH . 'uploads/' . $fileName;
+    if (file_exists($path)) {
+        header('Content-Type: application/pdf');
+        readfile($path);
+        exit;
+    } else {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+});

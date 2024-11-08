@@ -37,11 +37,11 @@
                         <td><?= $value['nama'] ?></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="detail-btn" data-toggle="modal" data-target="#info<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-info"></i> Detail</button>
+                                <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_pengguna'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
                                 <?php if ($value['id_pengguna'] != session('id_pengguna')) : ?>
-                                    <button class="resetpassword" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fa-solid fa-key"></i> ResetPassword</button>
-                                    <button class="ubahunit" data-toggle="modal" data-target="#edit<?= $value['id_pengguna'] ?>"><i class="fa-solid fa-pen"></i> Ubah</button>
-                                    <button class="delete-btn" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>"><i class="fas fa-trash"></i> Hapus</button>
+                                    <button class="resetpassword" data-toggle="tooltip" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>" title="Reset Password"><i class="fa-solid fa-key"></i></button>
+                                    <button class="ubahunit" data-toggle="tooltip" data-target="#edit<?= $value['id_pengguna'] ?>" title="Edit Data"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="delete-btn" data-toggle="tooltip" data-id="<?= $value['id_pengguna'] ?>" data-name="<?= $value['nama'] ?>" title="Hapus Data"><i class="fas fa-trash"></i></button>
                                 <?php endif; ?>
                             </div>
                         </td>

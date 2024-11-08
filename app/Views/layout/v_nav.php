@@ -22,7 +22,7 @@
 
 <div class="icon-container">
   <i class="far fa-bell"></i>
-  <div class="dropdown no-caret dropdown-user me-3 me-lg-4">
+  <div class="dropdown no-caret dropdown-user me-3 me-lg-4 d-flex align-items-center">
     <img class="profile-img" src="<?= base_url('public/assets/images/profile_pict/' . session()->get('photo')) ?>" id="profileImage">
 
     <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage" id="dropdownMenu" style="display: none;">
@@ -44,7 +44,5 @@
       </a>
     </div>
   </div>
-
-
 </div>
 </nav>

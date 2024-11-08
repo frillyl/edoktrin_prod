@@ -97,8 +97,8 @@
                                 <div class="card-body d-flex align-items-start">
                                     <img src="<?= base_url() ?>/public/assets/images/Landing.png" alt="Thumbnail" class="thumbnail">
                                     <div class="content ml-3">
-                                        <h5 class="card-title" style="text-align: left;">Judul Hasil Pencarian</h5>
-                                        <p class="card-text" style="text-align: left;">Deskripsi hasil pencarian akan muncul di sini.</p>
+                                        <h5 class="card-title" style="text-align: left;"><?= $arsip['no_arsip'] ?></h5>
+                                        <p class="card-text" style="text-align: left;"><?= $arsip['perihal'] ?></p>
                                         <div class="btn-container">
                                             <button class="btn custom-preview">Preview</button>
                                             <button class="btn custom-download">Download</button>

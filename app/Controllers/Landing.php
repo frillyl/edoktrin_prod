@@ -26,7 +26,7 @@ class Landing extends BaseController
 
         $data = [
             'title'   => 'E-Doktrin',
-            'sub'     => 'Beranda',
+            'sub'     => 'Halaman Utama',
             'results' => $results,
             'search'  => $keywords
         ];
