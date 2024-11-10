@@ -202,7 +202,8 @@ class Master extends BaseController
 
         $data = [
             'id_pengguna' => $id_pengguna,
-            'password' => $passwordDefault
+            'password' => $passwordDefault,
+            'is_default_password' => TRUE
         ];
         $this->ModelPengguna->edit($data);
 

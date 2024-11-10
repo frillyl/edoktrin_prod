@@ -10,6 +10,9 @@ $routes->get('/', 'Landing::index');
 $routes->get('/login', 'Login::index');
 $routes->post('login/auth', 'Login::auth');
 $routes->get('/logout', 'Login::logout');
+$routes->get('/login/change_password', 'Login::change_password');
+$routes->post('login/update_password', 'Login::update_password');
+
 // Dashboard
 $routes->get('/dashboard', 'Dashboard::index');
 // Master Pengguna

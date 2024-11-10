@@ -45,22 +45,30 @@ class Login extends BaseController
             $password = $this->request->getPost('password');
             $rememberMe = $this->request->getPost('remember');
             $check = $this->ModelLogin->login($username);
+
             if ($check != '') {
                 if (password_verify($password, $check['password'])) {
-                    session()->set('id_pengguna', $check['id_pengguna']);
-                    session()->set('nrp', $check['nrp']);
-                    session()->set('nama', $check['nama']);
-                    session()->set('email', $check['email']);
-                    session()->set('no_hp', $check['no_hp']);
-                    session()->set('username', $check['username']);
-                    session()->set('role', $check['role']);
-                    session()->set('photo', $check['photo']);
-                    session()->set('isLoggedIn', true);
+                    session()->set([
+                        'id_pengguna' => $check['id_pengguna'],
+                        'nrp' => $check['nrp'],
+                        'nama' => $check['nama'],
+                        'email' => $check['email'],
+                        'no_hp' => $check['no_hp'],
+                        'username' => $check['username'],
+                        'role' => $check['role'],
+                        'photo' => $check['photo'],
+                        'isLoggedIn' => true
+                    ]);
 
                     if ($rememberMe) {
                         helper('cookie');
                         set_cookie('username', $username, 3600 * 24 * 30);
                         set_cookie('password', password_hash($password, PASSWORD_BCRYPT), 3600 * 24 * 30);
+                    }
+
+                    // Jika password adalah default, redirect ke halaman ganti password
+                    if ($check['is_default_password']) {
+                        return redirect()->to(base_url('login/change_password'));
                     }
 
                     return redirect()->to(base_url('dashboard'));
@@ -75,6 +83,50 @@ class Login extends BaseController
         } else {
             session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
             return redirect()->to(base_url('/'))->withInput();
+        }
+    }
+
+
+    public function change_password()
+    {
+        $data = [
+            'title' => 'E-Doktrin',
+            'sub'   => 'Perbarui Kata Sandi'
+        ];
+        return view('v_change_password', $data);
+    }
+
+    public function update_password()
+    {
+        $id_pengguna = session()->get('id_pengguna');
+        if ($this->validate([
+            'new_password' => [
+                'label' => 'Password Baru',
+                'rules' => 'required|min_length[8]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'min_length' => '{field} minimal terdiri dari 8 karakter!'
+                ]
+            ],
+            'confirm_password' => [
+                'label' => 'Konfirmasi Password',
+                'rules' => 'matches[new_password]',
+                'errors' => [
+                    'matches' => '{field} tidak sesuai dengan Password Baru!'
+                ]
+            ]
+        ])) {
+            $new_password = $this->request->getPost('new_password');
+            $data = [
+                'password' => password_hash($new_password, PASSWORD_BCRYPT),
+                'is_default_password' => FALSE
+            ];
+            $this->ModelLogin->update($id_pengguna, $data);
+            session()->setFlashdata('success', 'Password berhasil diubah.');
+            return redirect()->to(base_url('dashboard'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('login/change_password'));
         }
     }
 
