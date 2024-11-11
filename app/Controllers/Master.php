@@ -6,6 +6,7 @@ use App\Models\ModelPengguna;
 use App\Models\ModelPencipta;
 use App\Models\ModelUnit;
 use App\Models\ModelKlasifikasi;
+use App\Models\ModelNotifikasi;
 
 class Master extends BaseController
 {
@@ -13,6 +14,7 @@ class Master extends BaseController
     protected $ModelPencipta;
     protected $ModelUnit;
     protected $ModelKlasifikasi;
+    protected $ModelNotifikasi;
 
     public function __construct()
     {
@@ -21,14 +23,14 @@ class Master extends BaseController
         $this->ModelPencipta = new ModelPencipta();
         $this->ModelUnit = new ModelUnit();
         $this->ModelKlasifikasi = new ModelKlasifikasi();
+        $this->ModelNotifikasi = new ModelNotifikasi();
     }
 
     // MASTER PENGGUNA
     // Index Pengguna
     public function index_pengguna()
     {
-        // Ambil data notifikasi yang belum dibaca untuk pengguna yang sedang login
-        $unreadNotifications = $this->ModelPengguna->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadNotifications = $this->ModelNotifikasi->getUnreadNotifications(session()->get('id_pengguna'));
         $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Doktrin',

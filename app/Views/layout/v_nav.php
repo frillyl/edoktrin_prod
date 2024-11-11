@@ -154,7 +154,7 @@
           <div class="notification-item">
             <div class="icon"><i class="far fa-bell"></i></div>
             <div class="text">
-              <h4 class="item-title"><?php echo "{$notif['pesan']}"; ?></h4>
+              <h4 class="item-title"><?php echo "{$notif['pesan']} oleh {$notif['created_by_name']}"; ?></h4>
               <p class="item-info"></p>
             </div>
           </div>
