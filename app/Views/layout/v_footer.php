@@ -116,6 +116,29 @@
         this.querySelector('i').classList.toggle('fa-sort-alpha-up');
     });
 </script>
+<script>
+    document.querySelector('.icon-container').addEventListener('click', function() {
+        // Lakukan AJAX untuk menandai notifikasi sebagai dibaca
+        fetch("<?= base_url('master/markNotificationsAsRead') ?>", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-Token": "<?= csrf_hash() ?>"
+                },
+                body: JSON.stringify({
+                    id_pengguna: <?= session()->get('id_pengguna') ?>
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Hilangkan badge notifikasi jika berhasil
+                    document.querySelector('.badge').style.display = 'none';
+                }
+            });
+    });
+</script>
 </body>
 
 </html>

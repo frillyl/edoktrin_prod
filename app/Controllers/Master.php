@@ -27,11 +27,16 @@ class Master extends BaseController
     // Index Pengguna
     public function index_pengguna()
     {
+        // Ambil data notifikasi yang belum dibaca untuk pengguna yang sedang login
+        $unreadNotifications = $this->ModelPengguna->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Doktrin',
             'sub'   => 'Master Pengguna',
             'content' => 'master/pengguna/v_index',
-            'pengguna' => $this->ModelPengguna->allData()
+            'pengguna' => $this->ModelPengguna->allData(),
+            'unreadNotifications' => $unreadNotifications,
+            'unreadCount' => $unreadCount
         ];
         return view('layout/v_wrapper', $data);
     }
@@ -99,6 +104,8 @@ class Master extends BaseController
                 'created_by' => $this->request->getPost('created_by')
             );
             $this->ModelPengguna->add($data);
+            $pesan = "Pengguna baru dengan nama {$nama} telah ditambahkan.";
+            $this->ModelPengguna->addNotification($data['created_by'], 'pengguna', 'add', $pesan);
             session()->setFlashdata('success', 'Data pengguna berhasil ditambahkan.');
             return redirect()->to(base_url('master/pengguna'));
         } else {

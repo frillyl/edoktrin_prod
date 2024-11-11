@@ -21,6 +21,35 @@ class ModelPengguna extends Model
             ->get()->getResultArray();
     }
 
+    public function addNotification($id_pengguna, $jenis_entitas, $jenis_aksi, $pesan)
+    {
+        $data = [
+            'id_pengguna' => $id_pengguna,
+            'jenis_entitas' => $jenis_entitas,
+            'jenis_aksi' => $jenis_aksi,
+            'pesan' => $pesan,
+            'status' => 'unread'
+        ];
+        $this->db->table('tb_notifikasi')->insert($data);
+    }
+
+    public function getUnreadNotifications($id_pengguna)
+    {
+        return $this->db->table('tb_notifikasi')
+            ->where('id_pengguna', $id_pengguna)
+            ->where('status', 'unread')
+            ->orderBy('created_at', 'DESC')
+            ->get()->getResultArray();
+    }
+
+    public function markAsRead($id_pengguna)
+    {
+        $this->db->table('tb_notifikasi')
+            ->where('id_pengguna', $id_pengguna)
+            ->where('status', 'unread')
+            ->update(['status' => 'read']);
+    }
+
     public function detailData($id_pengguna)
     {
         return $this->db->table('tb_pengguna')
