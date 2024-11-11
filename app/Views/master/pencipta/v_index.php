@@ -2,7 +2,7 @@
     <h3 class="title">Asal Doktrin</h3>
     <div class="card-table search-card">
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <input type="text" id="searchInput" placeholder="Search">
             <div class="search-icon">
                 <i class="fas fa-search" title="Search"></i>
             </div>
@@ -40,6 +40,9 @@
                 <?php } ?>
             </tbody>
         </table>
+        <div id="noDataMessage" style="display: none; text-align: center; color: red; margin-top: 10px;">
+            Tidak ditemukan data yang cocok
+        </div>
     </div>
 
     <!-- Pagination -->

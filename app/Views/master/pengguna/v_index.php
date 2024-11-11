@@ -4,7 +4,7 @@
     <!-- Kontainer utama untuk tabel dan tombol -->
     <div class="card-table search-card">
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <input type="text" id="searchInput" placeholder="Search">
             <div class="search-icon">
                 <i class="fas fa-search" title="Search"></i>
             </div>
@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>NRP</th>
-                    <th>Nama Anggota</th>
+                    <th id="sortNRP" style="position: relative; text-align: center; cursor: pointer;">NRP <i class="fas fa-sort" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.8em; color: gray;"></i></th>
+                    <th id="sortNama" style="position: relative; text-align: center; cursor: pointer;">Nama Anggota <i class="fas fa-sort" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.8em; color: gray;"></i></th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -49,6 +49,10 @@
                 <?php } ?>
             </tbody>
         </table>
+        <!-- Pesan "Tidak ditemukan data yang cocok" -->
+        <div id="noDataMessage" style="display: none; text-align: center; color: red; margin-top: 10px;">
+            Tidak ditemukan data yang cocok
+        </div>
     </div>
 
     <div class="pagination-container">

@@ -58,6 +58,64 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#documentTable tr');
+        let hasVisibleRows = false;
+
+        rows.forEach(row => {
+            const nrp = row.cells[1].textContent.toLowerCase();
+            const nama = row.cells[2].textContent.toLowerCase();
+
+            if (nrp.includes(filter) || nama.includes(filter)) {
+                row.style.display = '';
+                hasVisibleRows = true;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        document.getElementById('noDataMessage').style.display = hasVisibleRows ? 'none' : 'block';
+    });
+
+    let isAscendingNRP = true; // Status urutan kolom NRP
+    let isAscendingNama = true; // Status urutan kolom Nama
+
+    // Fungsi untuk mengurutkan tabel
+    function sortTable(columnIndex, isAscending) {
+        const rows = Array.from(document.querySelectorAll('#documentTable tr'));
+
+        rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].textContent.toLowerCase();
+            const cellB = b.cells[columnIndex].textContent.toLowerCase();
+
+            if (cellA < cellB) return isAscending ? -1 : 1;
+            if (cellA > cellB) return isAscending ? 1 : -1;
+            return 0;
+        });
+
+        const tbody = document.getElementById('documentTable');
+        tbody.innerHTML = ''; // Hapus isi tbody
+        rows.forEach(row => tbody.appendChild(row)); // Tambahkan kembali dalam urutan baru
+    }
+
+    // Event listener untuk sorting berdasarkan NRP
+    document.getElementById('sortNRP').addEventListener('click', function() {
+        sortTable(1, isAscendingNRP);
+        isAscendingNRP = !isAscendingNRP; // Toggle urutan
+        this.querySelector('i').classList.toggle('fa-sort-alpha-down');
+        this.querySelector('i').classList.toggle('fa-sort-alpha-up');
+    });
+
+    // Event listener untuk sorting berdasarkan Nama Anggota
+    document.getElementById('sortNama').addEventListener('click', function() {
+        sortTable(2, isAscendingNama);
+        isAscendingNama = !isAscendingNama; // Toggle urutan
+        this.querySelector('i').classList.toggle('fa-sort-alpha-down');
+        this.querySelector('i').classList.toggle('fa-sort-alpha-up');
+    });
+</script>
 </body>
 
 </html>
