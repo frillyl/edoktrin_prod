@@ -42,6 +42,7 @@ $routes->get('master/klasifikasi/delete/(:segment)', 'Master::delete_klasifikasi
 // Manajemen Arsip
 $routes->get('/manajemen/arsip', 'Arsip::index');
 $routes->post('manajemen/arsip/add', 'Arsip::add');
+$routes->post('manajemen/arsip/edit/(:segment)', 'Arsip::edit/$1');
 $routes->get('/manajemen/arsip/preview/(:any)', function ($fileName) {
     $path = WRITEPATH . 'uploads/' . $fileName;
     if (file_exists($path)) {

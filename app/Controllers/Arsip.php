@@ -182,6 +182,134 @@ class Arsip extends BaseController
         }
     }
 
+    public function edit($id_arsip)
+    {
+        if ($this->validate([
+            'no_arsip' => [
+                'label' => 'Nomor Doktrin',
+                'rules' => 'required|max_length[50]|is_unique[tb_arsip.no_arsip,id_arsip,' . $id_arsip . ']',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'is_unique' => '{field} sudah terdaftar!',
+                    'max_length' => '{field} maksimal terdiri dari 50 karakter!'
+                ]
+            ],
+            'tgl_doktrin' => [
+                'label' => 'Tanggal Doktrin',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
+            'id_pencipta' => [
+                'label' => 'Asal Doktrin',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
+            'id_klasifikasi' => [
+                'label' => 'Jenis Doktrin',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
+            'perihal' => [
+                'label' => 'Perihal',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
+            'tgl_masuk' => [
+                'label' => 'Tanggal Surat Masuk',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
+            'id_unit' => [
+                'label' => 'Unit Organisasi',
+                'rules' => 'permit_empty'
+            ],
+            'nama_file' => [
+                'label' => 'File',
+                'rules' => 'permit_empty|max_size[nama_file,51200]|mime_in[nama_file,application/pdf,image/jpeg,image/jpg,image/png,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
+                'errors' => [
+                    'max_size' => '{field} maksimal 50MB!',
+                    'mime_in' => '{field} hanya berupa file PDF, JPEG, PNG, DOC, dan DOCX!'
+                ]
+            ],
+            'edited_by' => [
+                'label' => 'Diubah Oleh',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ]
+        ])) {
+            $file = $this->request->getFile('nama_file');
+            $arsipLama = $this->ModelArsip->find($id_arsip);
+            $filePath = $arsipLama->path_file;
+            $text = $arsipLama->isi_file;
+
+            if ($file->isValid() && !$file->hasMoved()) {
+                // Hapus file lama jika ada file baru diunggah
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+                $fileType = $file->getClientMimeType();
+                $fileName = $file->getRandomName();
+                $filePath = WRITEPATH . 'uploads/' . $fileName;
+
+                if ($fileType === 'application/pdf') {
+                    $file->move(WRITEPATH . 'uploads', $fileName);
+                    $text = $this->extractTextFromPDF($filePath);
+                } elseif ($fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    $phpWord = IOFactory::load($file->getTempName());
+                    $pdfFile = WRITEPATH . 'uploads/' . pathinfo($fileName, PATHINFO_FILENAME) . '.pdf';
+                    $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
+                    $pdfWriter->save($pdfFile);
+
+                    $filePath = $pdfFile;
+                    if (file_exists($filePath)) {
+                        $text = $this->extractTextFromPDF($filePath);
+                    } else {
+                        $text = '';
+                        session()->setFlashdata('error', 'Gagal mengekstrak teks dari file yang dikonversi.');
+                    }
+                } else {
+                    session()->setFlashdata('error', 'Format file tidak didukung untuk diunggah.');
+                    return redirect()->to(base_url('manajemen/arsip'));
+                }
+            }
+
+            $data = [
+                'no_arsip' => $this->request->getPost('no_arsip'),
+                'tgl_doktrin' => $this->request->getPost('tgl_doktrin'),
+                'id_pencipta' => $this->request->getPost('id_pencipta'),
+                'id_klasifikasi' => $this->request->getPost('id_klasifikasi'),
+                'perihal' => $this->request->getPost('perihal'),
+                'tgl_masuk' => $this->request->getPost('tgl_masuk'),
+                'id_unit' => $this->request->getPost('id_unit'),
+                'nama_file' => $fileName ?? $arsipLama->nama_file,
+                'tipe_file' => 'application/pdf',
+                'path_file' => $filePath,
+                'isi_file' => $text,
+                'edited_by' => $this->request->getPost('edited_by')
+            ];
+
+            $this->ModelArsip->update($id_arsip, $data);
+            session()->setFlashdata('success', 'Data arsip berhasil diubah.');
+            return redirect()->to(base_url('manajemen/arsip'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('manajemen/arsip'));
+        }
+    }
+
     private function extractTextFromPDF($filePath)
     {
         $parser = new \Smalot\PdfParser\Parser();
