@@ -6,7 +6,7 @@
     position: relative;
   }
 
-  .notification-menu .glyphicon-bell {
+  .notification-menu .far.fa-bell {
     font-size: 1.5rem;
     position: relative;
   }
@@ -42,6 +42,7 @@
   .notifications-wrapper {
     overflow-y: auto;
     max-height: 250px;
+    text-decoration: none;
   }
 
   .menu-title {
@@ -63,6 +64,7 @@
   .notification-footer {
     padding: 10px 15px;
     background-color: #f8f9fa;
+    text-decoration: none;
   }
 
   .notification-item {
@@ -73,6 +75,7 @@
     background: #f0f0f0;
     border-radius: 5px;
     transition: background-color 0.3s;
+    text-decoration: none;
   }
 
   .notification-item:hover {
@@ -87,6 +90,7 @@
 
   .notification-item .text {
     flex-grow: 1;
+    text-decoration: none;
   }
 
   .item-title {
@@ -94,6 +98,7 @@
     font-weight: bold;
     color: #333;
     margin: 0;
+    text-decoration: none;
   }
 
   .item-info {
@@ -102,9 +107,27 @@
     margin: 0;
   }
 
-  .divider {
-    margin: 0;
-    border-top: 1px solid #e0e0e0;
+  /* Menghilangkan garis bawah pada link teks notifikasi */
+  a.content {
+    text-decoration: none;
+    color: inherit;
+    /* Menjaga warna teks */
+  }
+
+  a.content:hover {
+    text-decoration: none;
+    /* Menjaga tanpa garis bawah saat hover */
+  }
+
+  .notification-item .text,
+  .item-title {
+    text-decoration: none;
+    /* Menghilangkan dekorasi pada teks */
+
+    .divider {
+      margin: 0;
+      border-top: 1px solid #e0e0e0;
+    }
   }
 </style>
 
@@ -150,15 +173,15 @@
         $recentNotifications = $unreadNotifications;
         foreach ($recentNotifications as $notif):
         ?>
-          <p class="content">
-          <div class="notification-item">
-            <div class="icon"><i class="far fa-bell"></i></div>
-            <div class="text">
-              <h4 class="item-title"><?php echo "{$notif['pesan']} oleh {$notif['created_by_name']}"; ?></h4>
-              <p class="item-info"></p>
+          <a href="#" class="content" data-id="<?= $notif['id_notifikasi']; ?>">
+            <div class="notification-item">
+              <div class="icon"><i class="far fa-bell"></i></div>
+              <div class="text">
+                <h4 class="item-title"><?php echo "{$notif['pesan']} oleh {$notif['created_by_name']}"; ?></h4>
+                <p class="item-info"></p>
+              </div>
             </div>
-          </div>
-          </p>
+          </a>
         <?php endforeach; ?>
       </div>
     </ul>

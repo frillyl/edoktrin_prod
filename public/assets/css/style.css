@@ -531,6 +531,7 @@ nav ul li a.active {
     background: #f0f0f0;
     border-radius: 5px;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 .notification-item:hover {
@@ -541,10 +542,12 @@ nav ul li a.active {
     margin-right: 10px;
     font-size: 1.2rem;
     color: #8A3A42;
+    text-decoration: none;
 }
 
 .notification-item .text {
     flex-grow: 1;
+    text-decoration: none;
 }
 
 .item-title {
@@ -552,12 +555,14 @@ nav ul li a.active {
     font-weight: bold;
     color: #333;
     margin: 0;
+    text-decoration: none;
 }
 
 .item-info {
     font-size: 0.85rem;
     color: #999;
     margin: 0;
+    text-decoration: none;
 }
 
 .divider {

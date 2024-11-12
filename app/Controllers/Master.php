@@ -106,8 +106,8 @@ class Master extends BaseController
                 'created_by' => $this->request->getPost('created_by')
             );
             $this->ModelPengguna->add($data);
-            $pesan = "Pengguna baru dengan nama {$nama} telah ditambahkan.";
-            $this->ModelPengguna->addNotification($data['created_by'], 'pengguna', 'add', $pesan);
+            $pesan = "Pengguna baru dengan nama {$nama} telah ditambahkan";
+            $this->ModelNotifikasi->addNotification($data['created_by'], 'pengguna', 'add', $pesan);
             session()->setFlashdata('success', 'Data pengguna berhasil ditambahkan.');
             return redirect()->to(base_url('master/pengguna'));
         } else {
@@ -180,6 +180,8 @@ class Master extends BaseController
                 'edited_by' => $this->request->getPost('edited_by')
             );
             $this->ModelPengguna->update($id_pengguna, $data);
+            $pesan = "Data pengguna dengan nama {$nama} telah diubah";
+            $this->ModelNotifikasi->addNotification($data['edited_by'], 'pengguna', 'edit', $pesan);
             session()->setFlashdata('success', 'Data pengguna berhasil diubah.');
             return redirect()->to(base_url('master/pengguna'));
         } else {
@@ -196,10 +198,15 @@ class Master extends BaseController
             return redirect()->to(base_url('master/pengguna'));
         }
 
+        $pengguna = $this->ModelPengguna->getPenggunaById($id_pengguna);
+        $nama = $pengguna['nama'] ?? 'Pengguna';
+
         $data = [
             'id_pengguna' => $id_pengguna
         ];
         $this->ModelPengguna->delete_data($data);
+        $pesan = "Pengguna dengan nama {$nama} telah dihapus";
+        $this->ModelNotifikasi->addNotification(session('id_pengguna'), 'pengguna', 'delete', $pesan);
         session()->setFlashdata('success', 'Data pengguna berhasil dihapus!');
         return redirect()->to(base_url('master/pengguna'));
     }
@@ -209,14 +216,18 @@ class Master extends BaseController
     {
         $passwordDefault = password_hash('defaultpassword', PASSWORD_BCRYPT);
 
+        $pengguna = $this->ModelPengguna->getPenggunaById($id_pengguna);
+        $nama = $pengguna['nama'] ?? 'Pengguna';
+
         $data = [
             'id_pengguna' => $id_pengguna,
             'password' => $passwordDefault,
             'is_default_password' => TRUE
         ];
         $this->ModelPengguna->edit($data);
-
-        session()->setFlashdata('success', 'Password pengguna berhasil direset.');
+        $pesan = "Password pengguna dengan nama {$nama} telah direset.";
+        $this->ModelNotifikasi->addNotification(session('id_pengguna'), 'pengguna', 'reset', $pesan);
+        session()->setFlashdata('success', 'Password pengguna berhasil direset');
         return redirect()->to(base_url('master/pengguna'));
     }
 

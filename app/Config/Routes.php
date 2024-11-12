@@ -21,6 +21,9 @@ $routes->post('master/pengguna/add', 'Master::add_pengguna');
 $routes->post('master/pengguna/edit/(:segment)', 'Master::edit_pengguna/$1');
 $routes->get('master/pengguna/delete/(:segment)', 'Master::delete_pengguna/$1');
 $routes->get('master/pengguna/reset_password/(:segment)', 'Master::reset_password/$1');
+// Notifikasi
+$routes->get('/notifikasi/markAllRead', 'Notifikasi::markAllRead');
+$routes->post('notifikasi/markAsRead', 'Notifikasi::markAsRead');
 // Master Asal Doktrin
 $routes->get('/master/pencipta', 'Master::index_pencipta');
 $routes->post('master/pencipta/add', 'Master::add_pencipta');

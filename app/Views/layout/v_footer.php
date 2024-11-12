@@ -117,26 +117,71 @@
     });
 </script>
 <script>
-    document.querySelector('.icon-container').addEventListener('click', function() {
-        // Lakukan AJAX untuk menandai notifikasi sebagai dibaca
-        fetch("<?= base_url('master/markNotificationsAsRead') ?>", {
-                method: "POST",
+    document.querySelector('.view-all').addEventListener('click', function(event) {
+        event.preventDefault(); // Mencegah reload halaman
+
+        fetch('<?= base_url('/notifikasi/markAllRead') ?>', {
                 headers: {
-                    "Content-Type": "application/json",
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRF-Token": "<?= csrf_hash() ?>"
+                    'Accept': 'application/json',
                 },
-                body: JSON.stringify({
-                    id_pengguna: <?= session()->get('id_pengguna') ?>
-                })
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    // Hilangkan badge notifikasi jika berhasil
+                if (data.status === 'success') {
+                    // Hapus badge dan perbarui tampilan notifikasi
                     document.querySelector('.badge').style.display = 'none';
+                    document.querySelector('.menu-title').textContent = '0 Notifikasi';
+
+                    // Atur ulang status notifikasi menjadi terbaca dan sembunyikan dari tampilan
+                    document.querySelectorAll('.notification-item').forEach(item => {
+                        item.classList.add('read');
+                        item.style.display = 'none'; // Sembunyikan notifikasi dari tampilan
+                    });
                 }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.content').forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const idNotifikasi = this.getAttribute('data-id');
+
+                fetch('<?= base_url('/notifikasi/markAsRead') ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id_notifikasi: idNotifikasi
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Hapus item notifikasi dari tampilan
+                            this.remove();
+
+                            // Perbarui badge count
+                            const badge = document.querySelector('.badge');
+                            let unreadCount = parseInt(badge.textContent) - 1;
+
+                            if (unreadCount > 0) {
+                                badge.textContent = unreadCount;
+                            } else {
+                                // Jika tidak ada lagi notifikasi yang belum dibaca
+                                badge.style.display = 'none';
+                                document.querySelector('.menu-title').textContent = '0 Notifikasi';
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             });
+        });
     });
 </script>
 </body>

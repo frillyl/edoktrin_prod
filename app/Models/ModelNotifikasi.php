@@ -28,15 +28,20 @@ class ModelNotifikasi extends Model
         return $this->db->table('tb_notifikasi')
             ->join('tb_pengguna as creator', 'creator.id_pengguna = tb_notifikasi.id_pengguna', 'left')
             ->where('status', 'unread')
-            ->select('tb_notifikasi.*, creator.nama as created_by_name')  // pastikan 'tb_notifikasi.*' dipilih
+            ->select('tb_notifikasi.*, creator.nama as created_by_name')
             ->orderBy('tb_notifikasi.created_at', 'DESC')
             ->get()->getResultArray();
     }
 
-    public function markAsRead()
+    public function markAllRead()
     {
         $this->db->table('tb_notifikasi')
             ->where('status', 'unread')
             ->update(['status' => 'read']);
+    }
+
+    public function markAsRead($id_notifikasi)
+    {
+        return $this->update($id_notifikasi, ['status' => 'read']);
     }
 }
