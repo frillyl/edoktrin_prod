@@ -172,6 +172,7 @@
 
                             if (unreadCount > 0) {
                                 badge.textContent = unreadCount;
+                                document.querySelector('.menu-title').textContent = unreadCount + ' Notifikasi';
                             } else {
                                 // Jika tidak ada lagi notifikasi yang belum dibaca
                                 badge.style.display = 'none';

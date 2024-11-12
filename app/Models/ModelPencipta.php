@@ -21,6 +21,11 @@ class ModelPencipta extends Model
             ->get()->getResultArray();
     }
 
+    public function getPenciptaById($id_pencipta)
+    {
+        return $this->where('id_pencipta', $id_pencipta)->get()->getRowArray();
+    }
+
     public function detailData($id_pencipta)
     {
         return $this->db->table('tb_pencipta')

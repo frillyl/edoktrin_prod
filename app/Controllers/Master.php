@@ -235,11 +235,15 @@ class Master extends BaseController
     // Index Asal Doktrin
     public function index_pencipta()
     {
+        $unreadNotifications = $this->ModelNotifikasi->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Doktrin',
             'sub'   => 'Master Asal Doktrin',
             'content' => 'master/pencipta/v_index',
-            'pencipta' => $this->ModelPencipta->allData()
+            'pencipta' => $this->ModelPencipta->allData(),
+            'unreadNotifications' => $unreadNotifications,
+            'unreadCount' => $unreadCount
         ];
         return view('layout/v_wrapper', $data);
     }
@@ -270,6 +274,8 @@ class Master extends BaseController
                 'created_by' => $this->request->getPost('created_by')
             );
             $this->ModelPencipta->add($data);
+            $pesan = "Asal doktrin baru dengan nama {$data['pencipta']} telah ditambahkan";
+            $this->ModelNotifikasi->addNotification($data['created_by'], 'asal doktrin', 'add', $pesan);
             session()->setFlashdata('success', 'Data asal doktrin berhasil ditambahkan.');
             return redirect()->to(base_url('master/pencipta'));
         } else {
@@ -305,6 +311,8 @@ class Master extends BaseController
                 'edited_by' => $this->request->getPost('edited_by')
             );
             $this->ModelPencipta->update($id_pencipta, $data);
+            $pesan = "Data asal doktrin dengan nama {$data['pencipta']} telah diubah";
+            $this->ModelNotifikasi->addNotification($data['edited_by'], 'asal doktrin', 'edit', $pesan);
             session()->setFlashdata('success', 'Data asal doktrin berhasil diubah.');
             return redirect()->to(base_url('master/pencipta'));
         } else {
@@ -316,10 +324,14 @@ class Master extends BaseController
     // Hapus Asal Doktrin
     public function delete_pencipta($id_pencipta)
     {
+        $pencipta = $this->ModelPencipta->getPenciptaById($id_pencipta);
+        $pencipta = $pencipta['pencipta'] ?? 'Pencipta';
         $data = [
             'id_pencipta' => $id_pencipta
         ];
         $this->ModelPencipta->delete_data($data);
+        $pesan = "Asal doktrin dengan nama {$pencipta} telah dihapus";
+        $this->ModelNotifikasi->addNotification(session('id_pengguna'), 'asal doktrin', 'delete', $pesan);
         session()->setFlashdata('success', 'Data asal doktrin berhasil dihapus!');
         return redirect()->to(base_url('master/pencipta'));
     }
@@ -328,11 +340,15 @@ class Master extends BaseController
     // Index Unit Organisasi
     public function index_unit()
     {
+        $unreadNotifications = $this->ModelNotifikasi->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Doktrin',
             'sub'   => 'Master Unit Organisasi',
             'content' => 'master/unit/v_index',
-            'unit' => $this->ModelUnit->allData()
+            'unit' => $this->ModelUnit->allData(),
+            'unreadNotifications' => $unreadNotifications,
+            'unreadCount' => $unreadCount
         ];
         return view('layout/v_wrapper', $data);
     }
@@ -420,11 +436,15 @@ class Master extends BaseController
     // MASTER JENIS DOKTRIN
     public function index_klasifikasi()
     {
+        $unreadNotifications = $this->ModelNotifikasi->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Doktrin',
             'sub'   => 'Master Jenis Doktrin',
             'content' => 'master/klasifikasi/v_index',
-            'klasifikasi' => $this->ModelKlasifikasi->allData()
+            'klasifikasi' => $this->ModelKlasifikasi->allData(),
+            'unreadNotifications' => $unreadNotifications,
+            'unreadCount' => $unreadCount
         ];
         return view('layout/v_wrapper', $data);
     }

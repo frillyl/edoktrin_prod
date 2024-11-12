@@ -6,6 +6,7 @@ use App\Models\ModelArsip;
 use App\Models\ModelPencipta;
 use App\Models\ModelUnit;
 use App\Models\ModelKlasifikasi;
+use App\Models\ModelNotifikasi;
 use CodeIgniter\View\Parser;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Element\Text;
@@ -22,6 +23,7 @@ class Arsip extends BaseController
     protected $ModelPencipta;
     protected $ModelUnit;
     protected $ModelKlasifikasi;
+    protected $ModelNotifikasi;
 
     public function __construct()
     {
@@ -30,10 +32,13 @@ class Arsip extends BaseController
         $this->ModelPencipta = new ModelPencipta();
         $this->ModelUnit = new ModelUnit();
         $this->ModelKlasifikasi = new ModelKlasifikasi();
+        $this->ModelNotifikasi = new ModelNotifikasi();
     }
 
     public function index()
     {
+        $unreadNotifications = $this->ModelNotifikasi->getUnreadNotifications(session()->get('id_pengguna'));
+        $unreadCount = count($unreadNotifications);
         $data = [
             'title' => 'E-Arsip',
             'sub'   => 'Manajemen Arsip',
@@ -42,6 +47,8 @@ class Arsip extends BaseController
             'pencipta' => $this->ModelPencipta->allData(),
             'unit' => $this->ModelUnit->allData(),
             'klasifikasi' => $this->ModelKlasifikasi->allData(),
+            'unreadNotifications' => $unreadNotifications,
+            'unreadCount' => $unreadCount
         ];
         return view('layout/v_wrapper', $data);
     }
