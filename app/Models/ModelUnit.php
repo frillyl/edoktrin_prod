@@ -21,6 +21,11 @@ class ModelUnit extends Model
             ->get()->getResultArray();
     }
 
+    public function getUnitById($id_unit)
+    {
+        return $this->where('id_unit', $id_unit)->get()->getRowArray();
+    }
+
     public function detailData($id_unit)
     {
         return $this->db->table('tb_unit')

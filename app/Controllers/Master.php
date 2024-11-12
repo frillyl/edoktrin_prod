@@ -325,7 +325,7 @@ class Master extends BaseController
     public function delete_pencipta($id_pencipta)
     {
         $pencipta = $this->ModelPencipta->getPenciptaById($id_pencipta);
-        $pencipta = $pencipta['pencipta'] ?? 'Pencipta';
+        $pencipta = $pencipta['pencipta'] ?? 'Asal Doktrin';
         $data = [
             'id_pencipta' => $id_pencipta
         ];
@@ -379,6 +379,8 @@ class Master extends BaseController
                 'created_by' => $this->request->getPost('created_by')
             );
             $this->ModelUnit->add($data);
+            $pesan = "Unit organisasi baru dengan nama {$data['unit']} telah ditambahkan";
+            $this->ModelNotifikasi->addNotification($data['created_by'], 'unit organisasi', 'add', $pesan);
             session()->setFlashdata('success', 'Data unit organisasi berhasil ditambahkan.');
             return redirect()->to(base_url('master/unit'));
         } else {
@@ -414,6 +416,8 @@ class Master extends BaseController
                 'edited_by' => $this->request->getPost('edited_by')
             );
             $this->ModelUnit->update($id_unit, $data);
+            $pesan = "Data unit organisasi dengan nama {$data['unit']} telah diubah";
+            $this->ModelNotifikasi->addNotification($data['edited_by'], 'unit organisasi', 'edit', $pesan);
             session()->setFlashdata('success', 'Data unit organisasi berhasil diubah.');
             return redirect()->to(base_url('master/unit'));
         } else {
@@ -425,10 +429,14 @@ class Master extends BaseController
     // Hapus Unit Organisasi
     public function delete_unit($id_unit)
     {
+        $unit = $this->ModelUnit->getUnitById($id_unit);
+        $unit = $unit['unit'] ?? 'Unit Organisasi';
         $data = [
             'id_unit' => $id_unit
         ];
         $this->ModelUnit->delete_data($data);
+        $pesan = "Unit organisasi dengan nama {$unit} telah dihapus";
+        $this->ModelNotifikasi->addNotification(session('id_pengguna'), 'unit organisasi', 'delete', $pesan);
         session()->setFlashdata('success', 'Data unit organisasi berhasil dihapus!');
         return redirect()->to(base_url('master/unit'));
     }
@@ -501,6 +509,8 @@ class Master extends BaseController
                 'created_by' => $this->request->getPost('created_by')
             );
             $this->ModelKlasifikasi->add($data);
+            $pesan = "Jenis doktrin baru dengan nama {$data['klasifikasi']} telah ditambahkan";
+            $this->ModelNotifikasi->addNotification($data['created_by'], 'jenis doktrin', 'add', $pesan);
             session()->setFlashdata('success', 'Data jenis doktrin berhasil ditambahkan.');
             return redirect()->to(base_url('master/klasifikasi'));
         } else {
@@ -562,6 +572,8 @@ class Master extends BaseController
                 'edited_by' => $this->request->getPost('edited_by')
             );
             $this->ModelKlasifikasi->update($id_klasifikasi, $data);
+            $pesan = "Data jenis doktrin dengan nama {$data['klasifikasi']} telah diubah";
+            $this->ModelNotifikasi->addNotification($data['edited_by'], 'jenis doktrin', 'edit', $pesan);
             session()->setFlashdata('success', 'Data jenis doktrin berhasil diubah.');
             return redirect()->to(base_url('master/klasifikasi'));
         } else {
@@ -573,10 +585,14 @@ class Master extends BaseController
     // Hapus Jenis Doktrin
     public function delete_klasifikasi($id_klasifikasi)
     {
+        $klasifikasi = $this->ModelKlasifikasi->getKlasifikasiById($id_klasifikasi);
+        $klasifikasi = $klasifikasi['klasifikasi'] ?? 'Jenis Doktrin';
         $data = [
             'id_klasifikasi' => $id_klasifikasi
         ];
         $this->ModelKlasifikasi->delete_data($data);
+        $pesan = "Jenis doktrin dengan nama {$klasifikasi} telah dihapus";
+        $this->ModelNotifikasi->addNotification(session('id_pengguna'), 'jenis doktrin', 'delete', $pesan);
         session()->setFlashdata('success', 'Data jenis doktrin berhasil dihapus!');
         return redirect()->to(base_url('master/klasifikasi'));
     }

@@ -21,6 +21,10 @@ class ModelKlasifikasi extends Model
             ->get()->getResultArray();
     }
 
+    public function getKlasifikasiById($id_klasifikasi)
+    {
+        return $this->where('id_klasifikasi', $id_klasifikasi)->get()->getRowArray();
+    }
 
     public function detailData($id_klasifikasi)
     {
