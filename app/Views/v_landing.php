@@ -88,9 +88,8 @@
 
             <div id="results-container">
                 <div class="main-card">
-                    <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Hasil Pencarian Pada File:</h4>
-
                     <?php if (!empty($results)): ?>
+                        <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Hasil Pencarian Pada File:</h4>
                         <?php foreach ($results as $arsip): ?>
                             <div class="result-item">
                                 <div class="card-body d-flex align-items-start">
@@ -99,12 +98,31 @@
                                         <h5 class="card-title" style="text-align: left;"><?= $arsip['no_arsip'] ?></h5>
                                         <p class="card-text" style="text-align: left;"><?= $arsip['perihal'] ?></p>
                                         <div class="btn-container">
-                                            <button class="btn custom-preview">Lihat</button>
+                                            <button class="btn custom-preview" data-pdf-url="<?= base_url('arsip/preview/' . basename($arsip['path_file'])); ?>">Lihat</button>
                                             <button class="btn custom-download">Unduh</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- MODAL SHOW PDF -->
+                            <div id="pdfModal" class="custom-modal" style="display: none;">
+                                <div class="custom-modal-dialog">
+                                    <div class="custom-modal-header" style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center;">
+                                            <h5 class="custom-modal-title" style="margin-right: 10px;">Dokumen PDF</h5>
+                                            <span id="pdfTitle"></span>
+                                        </div>
+                                        <button type="button" class="close-arsip" id="closePdfModalBtn" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="custom-modal-body">
+                                        <iframe id="pdfViewer" style="width:100%; height: 500px;" src=""></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END OF MODAL SHOW PDF -->
                         <?php endforeach; ?>
                     <?php else: ?>
                         <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Data Tidak Ditemukan.</h4>
@@ -127,7 +145,7 @@
 
     <script>
         let currentPage = 1;
-        const resultsPerPage = 5; // Adjust this to your desired number of results per page
+        const resultsPerPage = 3; // Adjust this to your desired number of results per page
 
         // Function to display the search results for the current page
         function displayResults() {
@@ -213,6 +231,38 @@
         }
         // Initialize the first page display
         displayResults();
+    </script>
+    <script>
+        // Event listener untuk semua tombol "Lihat" yang membuka modal PDF
+        document.querySelectorAll('.custom-preview').forEach(button => {
+            button.addEventListener('click', function() {
+                // Ambil URL PDF dari atribut data
+                const pdfUrl = this.getAttribute('data-pdf-url');
+
+                // Set src dari iframe dengan URL PDF
+                document.getElementById('pdfViewer').src = pdfUrl;
+
+                // Tampilkan modal
+                document.getElementById('pdfModal').style.display = 'block';
+            });
+        });
+
+        // Event listener untuk menutup modal
+        document.getElementById('closePdfModalBtn')?.addEventListener('click', function() {
+            // Sembunyikan modal
+            document.getElementById('pdfModal').style.display = 'none';
+
+            // Kosongkan src iframe agar PDF tidak terus terbuka saat modal ditutup
+            document.getElementById('pdfViewer').src = '';
+        });
+
+        // Pastikan modal ditutup jika klik di luar modal
+        document.getElementById('pdfModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                document.getElementById('pdfModal').style.display = 'none';
+                document.getElementById('pdfViewer').src = ''; // Kosongkan iframe
+            }
+        });
     </script>
     <!-- Bootstrap JS (optional, for better styling of the cards) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

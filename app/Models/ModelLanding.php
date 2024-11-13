@@ -13,10 +13,15 @@ class ModelLanding extends Model
 
     public function searchArsip($keywords)
     {
-        return $this->like('no_arsip', $keywords)
-            ->orLike('perihal', 'keywords')
-            ->orLike('nama_file', 'keywords')
-            ->orLike('isi_file', $keywords)
+        return $this->select('tb_arsip.*')
+            ->join('tb_klasifikasi', 'tb_arsip.id_klasifikasi = tb_klasifikasi.id_klasifikasi')
+            ->where('tb_klasifikasi.kategori', '3')
+            ->groupStart() // Untuk mulai grouping kondisi pencarian
+            ->like('tb_arsip.no_arsip', $keywords)
+            ->orLike('tb_arsip.perihal', $keywords)
+            ->orLike('tb_arsip.nama_file', $keywords)
+            ->orLike('tb_arsip.isi_file', $keywords)
+            ->groupEnd() // Menutup grouping
             ->asArray()
             ->findAll();
     }
