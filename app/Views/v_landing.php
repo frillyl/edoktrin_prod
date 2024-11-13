@@ -72,7 +72,7 @@
 
     <div class="page-background">
         <div class="content">
-            <h1 class="h1-landing" style="margin-bottom: 60px; font-size: 30px; font-weight: 700;">Selamat Datang <br> di E-DOKTRIN PUSINFOLAHTA</h1>
+            <h1 class="h1-landing" style="margin-bottom: 60px; font-size: 30px; font-weight: 700;">SELAMAT DATANG <br> DI E-DOKTRIN PUSINFOLAHTA</h1>
             <div class="searchcontainer">
                 <div class="search">
                     <div class="row">
@@ -87,33 +87,37 @@
             </div>
 
             <div id="results-container">
-                <?php if (!empty($results)): ?>
-                    <?php foreach ($results as $arsip): ?>
-                        <div class="main-card">
-                            <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Hasil Pencarian Pada File:</h4>
+                <div class="main-card">
+                    <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Hasil Pencarian Pada File:</h4>
+
+                    <?php if (!empty($results)): ?>
+                        <?php foreach ($results as $arsip): ?>
                             <div class="result-item">
                                 <div class="card-body d-flex align-items-start">
-                                    <img src="<?= base_url() ?>/public/assets/images/Landing.png" alt="Thumbnail" class="thumbnail">
+                                    <img src="<?= base_url() ?>/public/assets/images/pdf.png" alt="Thumbnail" class="thumbnail">
                                     <div class="content ml-3">
                                         <h5 class="card-title" style="text-align: left;"><?= $arsip['no_arsip'] ?></h5>
                                         <p class="card-text" style="text-align: left;"><?= $arsip['perihal'] ?></p>
                                         <div class="btn-container">
-                                            <button class="btn custom-preview">Preview</button>
-                                            <button class="btn custom-download">Download</button>
+                                            <button class="btn custom-preview">Lihat</button>
+                                            <button class="btn custom-download">Unduh</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="pagination" style="text-align: right; margin-top: 20px;">
-                                <button class="btn"><i class="fas fa-arrow-left"></i></button>
-                                <button class="btn page-btn" style="margin: 0 5px; background-color: #EAEAEA; color: black;">1</button>
-                                <button class="btn"><i class="fas fa-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Data Tidak Ditemukan.</h4>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Data Tidak Ditemukan.</h4>
+                    <?php endif; ?>
+
+                    <!-- Pindahkan pagination di luar perulangan -->
+                    <div class="pagination" style="text-align: right; margin-top: 20px;">
+                        <button class="btn"><i class="fas fa-arrow-left"></i></button>
+                        <button class="btn page-btn" style="margin: 0 5px; background-color: #EAEAEA; color: black;">1</button>
+                        <button class="btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -123,197 +127,98 @@
 
     <script>
         let currentPage = 1;
-        const itemsPerPage = 5;
+        const resultsPerPage = 5; // Adjust this to your desired number of results per page
 
-        function performSearch() {
-            const query = document.getElementById('search-input').value;
+        // Function to display the search results for the current page
+        function displayResults() {
+            const mainCard = document.getElementById('main-card');
+            const resultTemplate = document.getElementById('result-template');
+            const paginationContainer = document.getElementById('pagination-container');
 
-            const simulatedResults = [{
-                    title: "1 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "2 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "3 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "4 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "5 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "6 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "7 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "8 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "9 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "10 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "11 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "12 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "13 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "14 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "15 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            // Clear any existing results inside the main-card
+            mainCard.querySelectorAll('.result-item').forEach(item => {
+                if (item !== resultTemplate) {
+                    item.remove();
                 }
-            ];
-
-            const results = simulatedResults.filter(item =>
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.description.toLowerCase().includes(query.toLowerCase())
-            );
-
-            displayResults(results);
-        }
-
-        function displayResults(results) {
-            const container = document.getElementById('results-container');
-            container.innerHTML = '';
-
-            if (results.length === 0) {
-                container.innerHTML += '<p>No results found.</p>';
-                return;
-            }
-
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const paginatedResults = results.slice(startIndex, endIndex);
-
-            const mainCard = document.createElement('div');
-            mainCard.className = 'main-card';
-
-            const heading = document.createElement('h4');
-            heading.textContent = 'Hasil Pencarian Pada File:';
-            heading.style.fontSize = '16px';
-            heading.style.color = '#5D5D5D';
-            heading.style.textAlign = 'left';
-            heading.style.marginBottom = '20px';
-            mainCard.appendChild(heading);
-
-            paginatedResults.forEach(result => {
-                const resultElement = document.createElement('div');
-                resultElement.className = 'result-item';
-                resultElement.innerHTML = `
-            <div class="card-body d-flex align-items-start">
-                <img src="<?= base_url() ?>/public/assets/images/Landing.png" alt="Thumbnail" class="thumbnail">
-                <div class="content ml-3">
-                    <h5 class="card-title" style="text-align: left;">${result.title}</h5>
-                    <p class="card-text" style="text-align: left;">${result.description}</p>
-                    <div class="btn-container">
-                        <button class="btn custom-preview">Preview</button>
-                        <button class="btn custom-download">Download</button>
-                    </div>
-                </div>
-            </div>
-        `;
-                mainCard.appendChild(resultElement);
             });
 
-            // Create pagination element
-            const pagination = displayPagination(results.length);
-            mainCard.appendChild(pagination); // Add pagination to mainCard
+            const start = (currentPage - 1) * resultsPerPage;
+            const end = start + resultsPerPage;
 
-            container.appendChild(mainCard);
+            // Show the current page results
+            for (let i = start; i < end && i < results.length; i++) {
+                const resultItem = resultTemplate.cloneNode(true);
+                resultItem.style.display = 'block'; // Make it visible
+                resultItem.querySelector('.card-title').textContent = results[i].title;
+                resultItem.querySelector('.card-text').textContent = results[i].description;
+                mainCard.insertBefore(resultItem, paginationContainer); // Insert before pagination
+            }
+
+            // Update pagination buttons
+            updatePaginationButtons();
         }
 
-        function displayPagination(totalItems) {
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            const pagination = document.createElement('div');
-            pagination.className = 'pagination';
-            pagination.style.textAlign = 'right'; // Align to right
-            pagination.style.marginTop = '20px';
+        // Function to change the page
+        function changePage(direction) {
+            const totalPages = Math.ceil(results.length / resultsPerPage);
+            currentPage = Math.min(Math.max(1, currentPage + direction), totalPages);
+            displayResults();
+        }
 
-            // Left arrow button
-            const leftArrow = document.createElement('button');
-            leftArrow.innerHTML = '<i class="fas fa-arrow-left"></i>';
-            leftArrow.className = 'btn';
-            leftArrow.disabled = currentPage === 1;
-            leftArrow.onclick = () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    performSearch();
-                }
-            };
-            pagination.appendChild(leftArrow);
+        // Function to update pagination buttons
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(results.length / resultsPerPage);
+            const paginationContainer = document.getElementById('pagination-container');
 
-            // Page number buttons
+            // Clear previous pagination buttons
+            paginationContainer.innerHTML = '';
+
+            // Previous button
+            const prevButton = document.createElement('button');
+            prevButton.classList.add('btn');
+            prevButton.innerHTML = '<i class="fas fa-arrow-left"></i>';
+            prevButton.onclick = () => changePage(-1);
+            paginationContainer.appendChild(prevButton);
+
+            // Page buttons
             for (let i = 1; i <= totalPages; i++) {
                 const pageButton = document.createElement('button');
-                pageButton.className = 'btn page-btn';
-                pageButton.textContent = i;
+                pageButton.classList.add('btn', 'page-btn');
                 pageButton.style.margin = '0 5px';
-                pageButton.style.backgroundColor = i === currentPage ? '#8A3A42' : '#EAEAEA';
-                pageButton.style.color = i === currentPage ? 'white' : 'black';
-
-                pageButton.addEventListener('click', () => {
+                pageButton.style.backgroundColor = '#EAEAEA';
+                pageButton.style.color = 'black';
+                pageButton.textContent = i;
+                pageButton.onclick = () => {
                     currentPage = i;
-                    performSearch();
-                });
-
-                pagination.appendChild(pageButton);
+                    displayResults();
+                };
+                paginationContainer.appendChild(pageButton);
             }
 
-            // Right arrow button
-            const rightArrow = document.createElement('button');
-            rightArrow.innerHTML = '<i class="fas fa-arrow-right"></i>';
-            rightArrow.className = 'btn';
-            rightArrow.disabled = currentPage === totalPages;
-            rightArrow.onclick = () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    performSearch();
-                }
-            };
-            pagination.appendChild(rightArrow);
+            // Next button
+            const nextButton = document.createElement('button');
+            nextButton.classList.add('btn');
+            nextButton.innerHTML = '<i class="fas fa-arrow-right"></i>';
+            nextButton.onclick = () => changePage(1);
+            paginationContainer.appendChild(nextButton);
 
-            return pagination; // Return pagination to be appended in mainCard
+            // Highlight the active page
+            const pageButtons = paginationContainer.querySelectorAll('.page-btn');
+            pageButtons.forEach(btn => {
+                btn.style.backgroundColor = 'gray'; // Reset background color
+            });
+            if (pageButtons[currentPage - 1]) {
+                pageButtons[currentPage - 1].style.backgroundColor = '#CCCCCC'; // Highlight active page
+            }
         }
-
-        document.getElementById('search-input').addEventListener('click', function() {
-            const container = document.getElementById('results-container');
-            if (container.innerHTML !== '') {
-                container.innerHTML = '';
-            }
-        });
+        // Initialize the first page display
+        displayResults();
     </script>
-
     <!-- Bootstrap JS (optional, for better styling of the cards) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+    <script src="<?= base_url('public/assets/js/bootstrap.min.js'); ?>"></script>
 </body>
 
 </html>

@@ -5,7 +5,19 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+// Landing Page
 $routes->get('/', 'Landing::index');
+$routes->get('/arsip/preview/(:any)', function ($fileName) {
+    $path = WRITEPATH . 'uploads/' . $fileName;
+    if (file_exists($path)) {
+        header('Content-Type: application/pdf');
+        readfile($path);
+        exit;
+    } else {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+});
+
 // Login & Logout
 $routes->get('/login', 'Login::index');
 $routes->post('login/auth', 'Login::auth');
