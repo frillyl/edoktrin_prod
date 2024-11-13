@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Doktrin - Masuk</title>
+    <title><?= $title ?> | <?= $sub ?></title>
+    <link rel="shortcut icon" href="<?= base_url() ?>public/assets/images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url() ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 

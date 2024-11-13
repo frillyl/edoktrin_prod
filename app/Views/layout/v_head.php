@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title ?> | <?= $sub ?></title>
+    <link rel="shortcut icon" href="<?= base_url() ?>public/assets/images/logo.png" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/assets/css/bootstrap.min.css">
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
