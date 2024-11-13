@@ -263,7 +263,7 @@
 
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: `Ingin menghapus data pengguna "${name}"?`,
+                text: `Ingin menghapus data asal doktrin "${name}"?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

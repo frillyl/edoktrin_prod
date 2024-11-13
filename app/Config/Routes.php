@@ -12,7 +12,6 @@ $routes->post('login/auth', 'Login::auth');
 $routes->get('/logout', 'Login::logout');
 $routes->get('/login/change_password', 'Login::change_password');
 $routes->post('login/update_password', 'Login::update_password');
-
 // Dashboard
 $routes->get('/dashboard', 'Dashboard::index');
 // Master Pengguna
@@ -43,6 +42,7 @@ $routes->get('master/klasifikasi/delete/(:segment)', 'Master::delete_klasifikasi
 $routes->get('/manajemen/arsip', 'Arsip::index');
 $routes->post('manajemen/arsip/add', 'Arsip::add');
 $routes->post('manajemen/arsip/edit/(:segment)', 'Arsip::edit/$1');
+$routes->get('manajemen/arsip/delete/(:segment)', 'Arsip::delete/$1');
 $routes->get('/manajemen/arsip/preview/(:any)', function ($fileName) {
     $path = WRITEPATH . 'uploads/' . $fileName;
     if (file_exists($path)) {

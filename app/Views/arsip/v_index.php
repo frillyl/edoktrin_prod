@@ -46,10 +46,11 @@
                         <td><?= $value['perihal'] ?></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_klasifikasi'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
+                                <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_arsip'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
                                 <button class="ubahunit" id="openEditModal" data-target="#edit<?= $value['id_arsip'] ?>" data-toggle="tooltip" title="Edit Data"><i class="fa-solid fa-pen"></i></button>
-                                <button id="openDeleteModal" data-toggle="tooltip" class="delete-btn" title="Hapus Data"><i class="fas fa-trash"></i></button>
-                                <button id="openPdfModal" data-toggle="tooltip" class="show-pdf" data-pdf="<?= base_url('assets/pdf/jurnal.pdf'); ?>" title="Lihat PDF">
+                                <button class="delete-btn" data-toggle="tooltip" data-id="<?= $value['id_arsip'] ?>" data-name="<?= $value['no_arsip'] ?>" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                                <?php $fileName = basename($value['path_file']); ?>
+                                <button id="openPdfModal" data-toggle="tooltip" class="show-pdf" data-pdf-url="<?= base_url('manajemen/arsip/preview/' . $fileName); ?>" title="Tampilkan PDF">
                                     <i class="fa-solid fa-file-pdf"></i>
                                 </button>
                             </div>
@@ -289,38 +290,26 @@
 <?php } ?>
 <!-- END OF MODAL EDIT ARSIP -->
 
-<!-- Modal for displaying PDF -->
-<div id="pdfModal" class="custom-modal">
-    <div class="custom-modal-dialog">
-        <div class="custom-modal-header" style="display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center;">
-                <h5 class="custom-modal-title" style="margin-right: 10px;">Dokumen PDF</h5>
-                <span id="pdfTitle"></span>
+<!-- MODAL SHOW PDF -->
+<?php foreach ($arsip as $key => $value) { ?>
+    <div id="pdfModal" class="custom-modal" style="display: none;">
+        <div class="custom-modal-dialog">
+            <div class="custom-modal-header" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <h5 class="custom-modal-title" style="margin-right: 10px;">Dokumen PDF</h5>
+                    <span id="pdfTitle"></span>
+                </div>
+                <button type="button" class="close-arsip" id="closePdfModalBtn" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <button type="button" class="close-arsip" id="closePdfModalBtn" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="custom-modal-body">
-            <iframe id="pdfViewer" style="width:100%; height: 500px;" src=""></iframe>
+            <div class="custom-modal-body">
+                <iframe id="pdfViewer" style="width:100%; height: 500px;" src=""></iframe>
+            </div>
         </div>
     </div>
-</div>
-
-
-<!-- Modal pop-up for delete confirmation -->
-<div id="deleteModal" class="custom-modal">
-    <div class="modal-overlay" style="margin: 20% auto;">
-        <span class="close-button" id="closeModal">&times;</span>
-        <p>Apakah Anda Yakin Ingin Menghapus Data Pengguna <strong>Administrator</strong>?</p>
-        <div class="modal-buttons">
-            <button id="cancelBtn" class="cancel-btn">Batal</button>
-            <button id="confirmDeleteBtn" class="delete-btn">Hapus</button>
-        </div>
-    </div>
-</div>
-
-
+<?php } ?>
+<!-- END OF MODAL SHOW PDF -->
 
 <script>
     function openCreateModal() {
@@ -482,7 +471,7 @@
 
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: `Ingin menghapus data jenis doktrin "${name}"?`,
+                text: `Ingin menghapus data arsip "${name}"?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -491,9 +480,32 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "<?= base_url('master/klasifikasi/delete/') ?>" + id;
+                    window.location.href = "<?= base_url('manajemen/arsip/delete/') ?>" + id;
                 }
             });
         });
+    });
+
+    // Event listener untuk semua tombol "Tampilkan PDF"
+    document.querySelectorAll('.show-pdf').forEach(button => {
+        button.addEventListener('click', function() {
+            // Ambil URL PDF dari atribut data
+            const pdfUrl = this.getAttribute('data-pdf-url');
+
+            // Set src dari iframe dengan URL PDF
+            document.getElementById('pdfViewer').src = pdfUrl;
+
+            // Tampilkan modal
+            document.getElementById('pdfModal').style.display = 'block';
+        });
+    });
+
+    // Event listener untuk menutup modal
+    document.getElementById('closePdfModalBtn').addEventListener('click', function() {
+        // Sembunyikan modal
+        document.getElementById('pdfModal').style.display = 'none';
+
+        // Kosongkan src iframe agar PDF tidak terus terbuka saat modal ditutup
+        document.getElementById('pdfViewer').src = '';
     });
 </script>

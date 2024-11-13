@@ -310,6 +310,16 @@ class Arsip extends BaseController
         }
     }
 
+    public function delete($id_arsip)
+    {
+        $data = [
+            'id_arsip' => $id_arsip
+        ];
+        $this->ModelArsip->delete_data($data);
+        session()->setFlashdata('success', 'Data arsip berhasil dihapus!');
+        return redirect()->to(base_url('manajemen/arsip'));
+    }
+
     private function extractTextFromPDF($filePath)
     {
         $parser = new \Smalot\PdfParser\Parser();
