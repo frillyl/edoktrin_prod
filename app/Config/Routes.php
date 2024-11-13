@@ -14,6 +14,9 @@ $routes->get('/login/change_password', 'Login::change_password');
 $routes->post('login/update_password', 'Login::update_password');
 // Dashboard
 $routes->get('/dashboard', 'Dashboard::index');
+// Profile
+$routes->get('/profile', 'Profile::index');
+$routes->post('profile/edit', 'Profile::edit');
 // Master Pengguna
 $routes->get('/master/pengguna', 'Master::index_pengguna');
 $routes->post('master/pengguna/add', 'Master::add_pengguna');

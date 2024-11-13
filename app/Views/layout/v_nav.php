@@ -194,7 +194,7 @@
     </div>
 
     <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage" id="dropdownMenu" style="display: none;">
-      <a class="dropdown-item" href="<?= base_url('master/profile'); ?>"> <!-- Link to the profile page -->
+      <a class="dropdown-item" href="<?= base_url('profile'); ?>"> <!-- Link to the profile page -->
         <div class="dropdown-item-icon">
           <i class="fas fa-user"></i> <!-- You can change this icon -->
         </div>
