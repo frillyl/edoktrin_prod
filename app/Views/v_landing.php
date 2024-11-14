@@ -99,7 +99,7 @@
                                         <p class="card-text" style="text-align: left;"><?= $arsip['perihal'] ?></p>
                                         <div class="btn-container">
                                             <button class="btn custom-preview" data-pdf-url="<?= base_url('arsip/preview/' . basename($arsip['path_file'])); ?>">Lihat</button>
-                                            <button class="btn custom-download">Unduh</button>
+                                            <button class="btn custom-download" data-download-url="<?= base_url('arsip/download/' . basename($arsip['path_file'])); ?>">Unduh</button>
                                         </div>
                                     </div>
                                 </div>
@@ -124,18 +124,15 @@
                             </div>
                             <!-- END OF MODAL SHOW PDF -->
                         <?php endforeach; ?>
+                        <div class="pagination" style="text-align: right; margin-top: 20px;">
+                            <button class="btn"><i class="fas fa-arrow-left"></i></button>
+                            <button class="btn page-btn" style="margin: 0 5px; background-color: #EAEAEA; color: black;">1</button>
+                            <button class="btn"><i class="fas fa-arrow-right"></i></button>
+                        </div>
                     <?php else: ?>
-                        <h4 style="font-size: 16px; color: #5D5D5D; text-align: left; margin-bottom: 20px;">Data Tidak Ditemukan.</h4>
+                        <h4 style="font-size: 16px; color: #5D5D5D; text-align: center; margin-bottom: 20px;">Data Tidak Ditemukan</h4>
                     <?php endif; ?>
-
-                    <!-- Pindahkan pagination di luar perulangan -->
-                    <div class="pagination" style="text-align: right; margin-top: 20px;">
-                        <button class="btn"><i class="fas fa-arrow-left"></i></button>
-                        <button class="btn page-btn" style="margin: 0 5px; background-color: #EAEAEA; color: black;">1</button>
-                        <button class="btn"><i class="fas fa-arrow-right"></i></button>
-                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -262,6 +259,23 @@
                 document.getElementById('pdfModal').style.display = 'none';
                 document.getElementById('pdfViewer').src = ''; // Kosongkan iframe
             }
+        });
+    </script>
+    <script>
+        // Event listener untuk semua tombol "Unduh"
+        document.querySelectorAll('.custom-download').forEach(button => {
+            button.addEventListener('click', function() {
+                // Ambil URL file dari atribut data
+                const downloadUrl = this.getAttribute('data-download-url');
+
+                // Buat elemen anchor sementara untuk mengunduh file
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = ''; // Nama file akan mengikuti dari server jika kosong
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
         });
     </script>
     <!-- Bootstrap JS (optional, for better styling of the cards) -->

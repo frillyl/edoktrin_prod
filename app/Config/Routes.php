@@ -17,7 +17,16 @@ $routes->get('/arsip/preview/(:any)', function ($fileName) {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 });
-
+$routes->get('/arsip/download/(:any)', function ($fileName) {
+    $path = WRITEPATH . 'uploads/' . $fileName;
+    if (file_exists($path)) {
+        header('Content-Type: application/pdf');
+        readfile($path);
+        exit;
+    } else {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+});
 // Login & Logout
 $routes->get('/login', 'Login::index');
 $routes->post('login/auth', 'Login::auth');
