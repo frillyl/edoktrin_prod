@@ -7,8 +7,7 @@
                         <div class="col">
                             <h2 class="greetings"><b>Selamat Datang, Admin!</b></h2>
                             <p style="color: white;">
-                                Lorem Ipsum is a standard placeholder text used in the printing and typesetting industry.
-                                It serves to demonstrate visual elements such as fonts and layouts without the distraction of meaningful content.
+                                Selamat datang di portal E-Doktrin, solusi digital untuk pengelolaan arsip dan dokumen yang mudah, cepat, dan aman. Semoga portal ini mendukung efisiensi dan kemudahan akses bagi semua pengguna.
                             </p>
                         </div>
                         <div class="col-auto d-none d-lg-block mt-xxl-n4">
@@ -78,74 +77,20 @@
         function performSearch() {
             const query = document.getElementById('search-input').value;
 
-            const simulatedResults = [{
-                    title: "1 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            $.ajax({
+                url: '<?= base_url('/dashboard/search') ?>',
+                method: 'POST',
+                data: {
+                    keywords: query
                 },
-                {
-                    title: "2 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                dataType: 'json',
+                success: function(results) {
+                    displayResults(results);
                 },
-                {
-                    title: "3 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "4 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "5 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "6 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "7 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "8 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "9 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "10 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "11 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "12 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "13 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "14 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                {
-                    title: "15 Petunjuk Referensi Proses Pengambilan Keputusan Militer Dalam Rangka Operasi Militer Untuk Perang",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                error: function() {
+                    console.error('Failed to fetch search results.');
                 }
-            ];
-
-            const results = simulatedResults.filter(item =>
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.description.toLowerCase().includes(query.toLowerCase())
-            );
-
-            displayResults(results);
+            });
         }
 
         function displayResults(results) {
@@ -153,7 +98,7 @@
             container.innerHTML = '';
 
             if (results.length === 0) {
-                container.innerHTML += '<p>No results found.</p>';
+                container.innerHTML = '<p>No results found.</p>';
                 return;
             }
 
@@ -177,10 +122,10 @@
                 resultElement.className = 'result-item';
                 resultElement.innerHTML = `
             <div class="card-body d-flex align-items-start">
-                <img src="<?= base_url('assets/img/Landing.png'); ?>" alt="Thumbnail" class="thumbnail">
+                <img src="<?= base_url('public/assets/images/pdf.png'); ?>" alt="Thumbnail" class="thumbnail">
                 <div class="content ml-3">
-                    <h5 class="card-title" style="text-align: left;">${result.title}</h5>
-                    <p class="card-text" style="text-align: left;">${result.description}</p>
+                    <h5 class="card-title" style="text-align: left;">${result.no_arsip}</h5>
+                    <p class="card-text" style="text-align: left;">${result.perihal}</p>
                     <div class="btn-container">
                         <button class="btn custom-preview">Preview</button>
                         <button class="btn custom-download">Download</button>
@@ -191,12 +136,12 @@
                 mainCard.appendChild(resultElement);
             });
 
-            // Create pagination element
             const pagination = displayPagination(results.length);
-            mainCard.appendChild(pagination); // Add pagination to mainCard
+            mainCard.appendChild(pagination);
 
             container.appendChild(mainCard);
         }
+
 
         function displayPagination(totalItems) {
             const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -263,5 +208,4 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>

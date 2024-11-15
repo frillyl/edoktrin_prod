@@ -154,38 +154,38 @@
 </ul>
 
 <div class="icon-container">
-  <div class="notification-menu">
-    <a id="dLabel" role="button" data-toggle="notification-dropdown" data-target="#" href="/page.html">
-      <i class="far fa-bell"></i>
-      <?php if ($unreadCount > 0): ?>
-        <span class="badge"><?php echo $unreadCount; ?></span>
-      <?php endif; ?>
-    </a>
+    <div class="notification-menu">
+      <a id="dLabel" role="button" data-toggle="notification-dropdown" data-target="#" href="/page.html">
+        <i class="far fa-bell"></i>
+        <?php if ($unreadCount > 0): ?>
+          <span class="badge"><?php echo $unreadCount; ?></span>
+        <?php endif; ?>
+      </a>
 
-    <ul class="notification-dropdown-menu" role="menu" aria-labelledby="dLabel">
-      <div class="notification-heading">
-        <h4 class="menu-title"><?php echo $unreadCount; ?> Notifikasi</h4>
-        <a class="view-all" href="#" class="mark-all-read pull-right">Tandai semua telah dibaca</a>
-      </div>
-      <li class="divider"></li>
-      <div class="notifications-wrapper">
-        <?php
-        $recentNotifications = $unreadNotifications;
-        foreach ($recentNotifications as $notif):
-        ?>
-          <a href="#" class="content" data-id="<?= $notif['id_notifikasi']; ?>">
-            <div class="notification-item">
-              <div class="icon"><i class="far fa-bell"></i></div>
-              <div class="text">
-                <h4 class="item-title"><?php echo "{$notif['pesan']} oleh {$notif['created_by_name']}"; ?></h4>
-                <p class="item-info"></p>
+      <ul class="notification-dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <div class="notification-heading">
+          <h4 class="menu-title"><?php echo $unreadCount; ?> Notifikasi</h4>
+          <a class="view-all" href="#" class="mark-all-read pull-right">Tandai semua telah dibaca</a>
+        </div>
+        <li class="divider"></li>
+        <div class="notifications-wrapper">
+          <?php
+          $recentNotifications = $unreadNotifications;
+          foreach ($recentNotifications as $notif):
+          ?>
+            <a href="#" class="content" data-id="<?= $notif['id_notifikasi']; ?>">
+              <div class="notification-item">
+                <div class="icon"><i class="far fa-bell"></i></div>
+                <div class="text">
+                  <h4 class="item-title"><?php echo "{$notif['pesan']} oleh {$notif['created_by_name']}"; ?></h4>
+                  <p class="item-info"></p>
+                </div>
               </div>
-            </div>
-          </a>
-        <?php endforeach; ?>
-      </div>
-    </ul>
-  </div>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </ul>
+    </div>
 
   <div class="dropdown no-caret dropdown-user me-3 me-lg-4 d-flex align-items-center">
     <div id="profileImage" style="display: flex; align-items: center; cursor:pointer;">

@@ -42,6 +42,10 @@ class ModelNotifikasi extends Model
 
     public function markAsRead($id_notifikasi)
     {
+        if (!$id_notifikasi) {
+            throw new \InvalidArgumentException('ID notifikasi tidak boleh null.');
+        }
+
         return $this->update($id_notifikasi, ['status' => 'read']);
     }
 }

@@ -17,7 +17,11 @@ class Notifikasi extends BaseController
     public function markAsRead()
     {
         $data = $this->request->getJSON();
-        $id_notifikasi = $data->id_notifikasi;
+        $id_notifikasi = $data->id_notifikasi ?? null;
+
+        if (!$id_notifikasi) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'ID notifikasi tidak valid.']);
+        }
 
         $model = new ModelNotifikasi();
         $model->markAsRead($id_notifikasi);

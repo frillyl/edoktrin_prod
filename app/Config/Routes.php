@@ -35,6 +35,27 @@ $routes->get('/login/change_password', 'Login::change_password');
 $routes->post('login/update_password', 'Login::update_password');
 // Dashboard
 $routes->get('/dashboard', 'Dashboard::index');
+$routes->post('/dashboard/search', 'Dashboard::search');
+$routes->get('/dashboard/preview/(:any)', function ($fileName) {
+    $path = WRITEPATH . 'uploads/' . $fileName;
+    if (file_exists($path)) {
+        header('Content-Type: application/pdf');
+        readfile($path);
+        exit;
+    } else {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+});
+$routes->get('/dashboard/download/(:any)', function ($fileName) {
+    $path = WRITEPATH . 'uploads/' . $fileName;
+    if (file_exists($path)) {
+        header('Content-Type: application/pdf');
+        readfile($path);
+        exit;
+    } else {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+});
 // Profile
 $routes->get('/profile', 'Profile::index');
 $routes->post('profile/edit', 'Profile::edit');
