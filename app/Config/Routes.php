@@ -36,7 +36,7 @@ $routes->post('login/update_password', 'Login::update_password');
 // Dashboard
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->post('/dashboard/search', 'Dashboard::search');
-$routes->get('/dashboard/preview/(:any)', function ($fileName) {
+$routes->get('/dashboard/arsip/preview/(:any)', function ($fileName) {
     $path = WRITEPATH . 'uploads/' . $fileName;
     if (file_exists($path)) {
         header('Content-Type: application/pdf');

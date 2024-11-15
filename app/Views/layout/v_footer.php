@@ -251,18 +251,18 @@
             const resultElement = document.createElement('div');
             resultElement.className = 'result-item';
             resultElement.innerHTML = `
-            <div class="card-body d-flex align-items-start">
-                <img src="<?= base_url('assets/img/Landing.png'); ?>" alt="Thumbnail" class="thumbnail">
-                <div class="content ml-3">
-                    <h5 class="card-title" style="text-align: left;">${result.no_arsip}</h5>
-                    <p class="card-text" style="text-align: left;">${result.perihal}</p>
-                    <div class="btn-container">
-                        <button class="btn custom-preview">Preview</button>
-                        <button class="btn custom-download">Download</button>
-                    </div>
-                </div>
+    <div class="card-body d-flex align-items-start">
+        <img src="<?= base_url('public/assets/images/pdf.png'); ?>" alt="Thumbnail" class="thumbnail">
+        <div class="content ml-3">
+            <h5 class="card-title" style="text-align: left;">${result.no_arsip}</h5>
+            <p class="card-text" style="text-align: left;">${result.perihal}</p>
+            <div class="btn-container">
+                <button class="btn custom-preview" data-pdf-url="${'<?= base_url('dashboard/arsip/preview/'); ?>' + encodeURIComponent(basename(result.path_file))}">Lihat</button>
+                <button class="btn custom-download" data-download-url="${'<?= base_url('dashboard/arsip/download/'); ?>' + encodeURIComponent(basename(result.path_file))}">Download</button>
             </div>
-        `;
+        </div>
+    </div>
+`;
             mainCard.appendChild(resultElement);
         });
 
@@ -270,7 +270,46 @@
         mainCard.appendChild(pagination);
 
         container.appendChild(mainCard);
+
+        function basename(path) {
+            return path.split(/[\\/]/).pop(); // Split by / or \ and return the last segment
+        }
+
+        // Event listener for all "Lihat" buttons to open the PDF preview modal
+        document.addEventListener("DOMContentLoaded", function() {
+            // Event listener untuk semua tombol "Lihat" untuk membuka modal PDF
+            document.querySelectorAll('.custom-preview').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pdfUrl = this.getAttribute('data-pdf-url');
+                    document.getElementById('pdfViewer').src = pdfUrl; // Set iframe src
+                    document.getElementById('pdfModal').style.display = 'flex'; // Tampilkan modal
+                });
+            });
+
+            // Event listener untuk tombol close modal
+            document.getElementById('closePdfModalBtn').addEventListener('click', function() {
+                document.getElementById('pdfModal').style.display = 'none'; // Sembunyikan modal
+                document.getElementById('pdfViewer').src = ''; // Kosongkan src iframe
+            });
+
+            // Tutup modal saat klik di luar modal dialog
+            document.getElementById('pdfModal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none'; // Sembunyikan modal
+                    document.getElementById('pdfViewer').src = ''; // Kosongkan iframe
+                }
+            });
+        });
     }
+
+    document.getElementById('results-container').addEventListener('click', function(event) {
+        if (event.target.classList.contains('custom-preview')) {
+            const pdfUrl = event.target.getAttribute('data-pdf-url');
+            document.getElementById('pdfViewer').src = pdfUrl;
+            $('#pdfModal').modal('show');
+        }
+    });
+
 
     // Fungsi untuk menampilkan modal preview file
     function previewFile(fileId) {
@@ -341,38 +380,6 @@
         const container = document.getElementById('results-container');
         if (container.innerHTML !== '') {
             container.innerHTML = '';
-        }
-    });
-</script>
-<script>
-    // Event listener untuk semua tombol "Lihat" yang membuka modal PDF
-    document.querySelectorAll('.custom-preview').forEach(button => {
-        button.addEventListener('click', function() {
-            // Ambil URL PDF dari atribut data
-            const pdfUrl = this.getAttribute('data-pdf-url');
-
-            // Set src dari iframe dengan URL PDF
-            document.getElementById('pdfViewer').src = pdfUrl;
-
-            // Tampilkan modal
-            document.getElementById('pdfModal').style.display = 'block';
-        });
-    });
-
-    // Event listener untuk menutup modal
-    document.getElementById('closePdfModalBtn')?.addEventListener('click', function() {
-        // Sembunyikan modal
-        document.getElementById('pdfModal').style.display = 'none';
-
-        // Kosongkan src iframe agar PDF tidak terus terbuka saat modal ditutup
-        document.getElementById('pdfViewer').src = '';
-    });
-
-    // Pastikan modal ditutup jika klik di luar modal
-    document.getElementById('pdfModal')?.addEventListener('click', function(event) {
-        if (event.target === this) {
-            document.getElementById('pdfModal').style.display = 'none';
-            document.getElementById('pdfViewer').src = ''; // Kosongkan iframe
         }
     });
 </script>
