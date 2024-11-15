@@ -28,7 +28,10 @@ class Dashboard extends BaseController
             'sub'     => 'Beranda',
             'content' => 'v_dashboard',
             'unreadNotifications' => $unreadNotifications,
-            'unreadCount' => $unreadCount
+            'unreadCount' => $unreadCount,
+            'jmlKategori1' => $this->ModelDashboard->jmlArsipByKategori('1'),
+            'jmlKategori2' => $this->ModelDashboard->jmlArsipByKategori('2'),
+            'jmlKategori3' => $this->ModelDashboard->jmlArsipByKategori('3'),
         ];
 
         return view('layout/v_wrapper', $data);

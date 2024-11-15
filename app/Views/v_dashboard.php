@@ -20,8 +20,8 @@
             <div class="col-xl-3 col-md-6 mb-2 mx-1">
                 <div class="card custom-card d-flex flex-row">
                     <div class="left-home">
-                        <div class="top-text">35</div>
-                        <div class="bottom-text">TOTAL ARSIP HARI INI</div>
+                        <div class="top-text"><?= $jmlKategori1 ?></div>
+                        <div class="bottom-text">TOTAL ARSIP KATEGORI SANGAT RAHASIA</div>
                     </div>
                     <div class="right-home"></div>
                 </div>
@@ -30,8 +30,8 @@
             <div class="col-xl-3 col-md-6 mb-2 mx-1">
                 <div class="card custom-card d-flex flex-row">
                     <div class="left-home alt-left">
-                        <div class="top-text">35</div>
-                        <div class="bottom-text">TOTAL ARSIP HARI INI</div>
+                        <div class="top-text"><?= $jmlKategori2 ?></div>
+                        <div class="bottom-text">TOTAL ARSIP KATEGORI RAHASIA</div>
                     </div>
                     <div class="right-home alt-right"></div>
                 </div>
@@ -40,8 +40,8 @@
             <div class="col-xl-3 col-md-6 mb-2 mx-1">
                 <div class="card custom-card d-flex flex-row">
                     <div class="left-home">
-                        <div class="top-text">35</div>
-                        <div class="bottom-text">TOTAL ARSIP HARI INI</div>
+                        <div class="top-text"><?= $jmlKategori3 ?></div>
+                        <div class="bottom-text">TOTAL ARSIP KATEGORI UMUM</div>
                     </div>
                     <div class="right-home"></div>
                 </div>
@@ -55,8 +55,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="search-2">
-                                    <input type="text" id="search-input" placeholder="Search">
-                                    <button onclick="performSearch()">Search</button>
+                                    <input type="text" id="search-input" placeholder="Masukkan kata kunci pencarian Anda disini...">
+                                    <button onclick="performSearch()">Cari</button>
                                 </div>
                             </div>
                         </div>

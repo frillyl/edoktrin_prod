@@ -20,4 +20,12 @@ class ModelDashboard extends Model
             ->asArray()
             ->findAll();
     }
+
+    public function jmlArsipByKategori($kategori)
+    {
+        return $this->db->table('tb_arsip')
+            ->join('tb_klasifikasi', 'tb_arsip.id_klasifikasi = tb_klasifikasi.id_klasifikasi')
+            ->where('tb_klasifikasi.kategori', $kategori)
+            ->countAllResults();
+    }
 }
