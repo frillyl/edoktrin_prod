@@ -251,83 +251,58 @@
             const resultElement = document.createElement('div');
             resultElement.className = 'result-item';
             resultElement.innerHTML = `
-    <div class="card-body d-flex align-items-start">
-        <img src="<?= base_url('public/assets/images/pdf.png'); ?>" alt="Thumbnail" class="thumbnail">
-        <div class="content ml-3">
-            <h5 class="card-title" style="text-align: left;">${result.no_arsip}</h5>
-            <p class="card-text" style="text-align: left;">${result.perihal}</p>
-            <div class="btn-container">
-                <button class="btn custom-preview" data-pdf-url="${'<?= base_url('dashboard/arsip/preview/'); ?>' + encodeURIComponent(basename(result.path_file))}">Lihat</button>
-                <button class="btn custom-download" data-download-url="${'<?= base_url('dashboard/arsip/download/'); ?>' + encodeURIComponent(basename(result.path_file))}">Download</button>
-            </div>
-        </div>
-    </div>
-`;
+                <div class="card-body d-flex align-items-start">
+                    <img src="<?= base_url('public/assets/images/pdf.png'); ?>" alt="Thumbnail" class="thumbnail">
+                    <div class="content ml-3">
+                        <h5 class="card-title" style="text-align: left;">${result.no_arsip}</h5>
+                        <p class="card-text" style="text-align: left;">${result.perihal}</p>
+                        <div class="btn-container">
+                            <button class="btn custom-preview" data-pdf-url="${'<?= base_url('dashboard/arsip/preview/'); ?>' + encodeURIComponent(basename(result.path_file))}">Lihat</button>
+                            <button class="btn custom-download" data-download-url="${'<?= base_url('dashboard/arsip/download/'); ?>' + encodeURIComponent(basename(result.path_file))}">Download</button>
+                        </div>
+                    </div>
+                </div>
+            `;
             mainCard.appendChild(resultElement);
         });
 
         const pagination = displayPagination(results.length);
         mainCard.appendChild(pagination);
-
         container.appendChild(mainCard);
 
         function basename(path) {
-            return path.split(/[\\/]/).pop(); // Split by / or \ and return the last segment
+            return path.split(/[\\/]/).pop();
         }
 
-        // Event listener for all "Lihat" buttons to open the PDF preview modal
-        document.addEventListener("DOMContentLoaded", function() {
-            // Event listener untuk semua tombol "Lihat" untuk membuka modal PDF
-            document.querySelectorAll('.custom-preview').forEach(button => {
-                button.addEventListener('click', function() {
-                    const pdfUrl = this.getAttribute('data-pdf-url');
-                    document.getElementById('pdfViewer').src = pdfUrl; // Set iframe src
-                    document.getElementById('pdfModal').style.display = 'flex'; // Tampilkan modal
-                });
-            });
-
-            // Event listener untuk tombol close modal
-            document.getElementById('closePdfModalBtn').addEventListener('click', function() {
-                document.getElementById('pdfModal').style.display = 'none'; // Sembunyikan modal
-                document.getElementById('pdfViewer').src = ''; // Kosongkan src iframe
-            });
-
-            // Tutup modal saat klik di luar modal dialog
-            document.getElementById('pdfModal').addEventListener('click', function(event) {
-                if (event.target === this) {
-                    this.style.display = 'none'; // Sembunyikan modal
-                    document.getElementById('pdfViewer').src = ''; // Kosongkan iframe
-                }
+        // Tambahkan event listener untuk tombol "Lihat" setiap kali hasil pencarian dimuat
+        document.querySelectorAll('.custom-preview').forEach(button => {
+            button.addEventListener('click', function() {
+                const pdfUrl = this.getAttribute('data-pdf-url');
+                document.getElementById('pdfViewer').src = pdfUrl;
+                document.getElementById('pdfModal').style.display = 'flex';
             });
         });
     }
 
-    document.getElementById('results-container').addEventListener('click', function(event) {
-        if (event.target.classList.contains('custom-preview')) {
-            const pdfUrl = event.target.getAttribute('data-pdf-url');
-            document.getElementById('pdfViewer').src = pdfUrl;
-            $('#pdfModal').modal('show');
-        }
+    // Event listener untuk tombol close modal
+    document.getElementById('closePdfModalBtn').addEventListener('click', function() {
+        document.getElementById('pdfModal').style.display = 'none';
+        document.getElementById('pdfViewer').src = '';
     });
 
-
-    // Fungsi untuk menampilkan modal preview file
-    function previewFile(fileId) {
-        // Gunakan AJAX untuk mendapatkan konten file berdasarkan ID file
-        fetch(`<?= base_url('dashboard/getFilePreview') ?>/${fileId}`)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('fileContent').innerHTML = data;
-                $('#previewModal').modal('show'); // Menampilkan modal setelah konten di-load
-            })
-            .catch(error => console.error('Error fetching file preview:', error));
-    }
+    // Tutup modal saat klik di luar modal dialog
+    document.getElementById('pdfModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            this.style.display = 'none';
+            document.getElementById('pdfViewer').src = '';
+        }
+    });
 
     function displayPagination(totalItems) {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         const pagination = document.createElement('div');
         pagination.className = 'pagination';
-        pagination.style.textAlign = 'right'; // Align to right
+        pagination.style.textAlign = 'right';
         pagination.style.marginTop = '20px';
 
         // Left arrow button
@@ -373,7 +348,7 @@
         };
         pagination.appendChild(rightArrow);
 
-        return pagination; // Return pagination to be appended in mainCard
+        return pagination;
     }
 
     document.getElementById('search-input').addEventListener('click', function() {
@@ -383,6 +358,7 @@
         }
     });
 </script>
+
 <script>
     // Event listener untuk semua tombol "Unduh"
     document.querySelectorAll('.custom-download').forEach(button => {
