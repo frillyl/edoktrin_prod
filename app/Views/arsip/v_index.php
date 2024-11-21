@@ -24,10 +24,7 @@
                     <th>No.</th>
                     <th>Nomor Doktrin</th>
                     <th>Tanggal Doktrin</th>
-                    <th>Tanggal Masuk</th>
                     <th>Asal Doktrin</th>
-                    <th>Jenis Doktrin</th>
-                    <th>Unit Organisasi</th>
                     <th>Perihal</th>
                     <th style="text-align: center;">Aksi</th>
                 </tr>
@@ -39,10 +36,7 @@
                         <td><?= $no++ ?>.</td>
                         <td><?= $value['no_arsip'] ?></td>
                         <td><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></td>
-                        <td><?= date('j F Y', strtotime($value['tgl_masuk'])) ?></td>
                         <td><?= $value['pencipta'] ?></td>
-                        <td><?= $value['klasifikasi'] ?></td>
-                        <td><?= $value['unit'] ?></td>
                         <td><?= $value['perihal'] ?></td>
                         <td>
                             <div class="action-buttons">

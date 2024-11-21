@@ -151,6 +151,30 @@ class Arsip extends BaseController
                         $text = '';
                         session()->setFlashdata('error', 'Gagal mengekstrak teks dari file yang dikonversi.');
                     }
+                } elseif (in_array($fileType, ['image/jpeg', 'image/jpg', 'image/png'])) {
+                    // Konversi gambar ke PDF
+                    $pdfFile = WRITEPATH . 'uploads/' . pathinfo($fileName, PATHINFO_FILENAME) . '.pdf';
+
+                    // Menggunakan FPDF
+                    $pdf = new \FPDF();
+                    $pdf->AddPage();
+
+                    // Periksa jika format tidak didukung langsung oleh FPDF
+                    $tempImagePath = WRITEPATH . 'uploads/' . pathinfo($fileName, PATHINFO_FILENAME) . '.png';
+                    if ($this->convertImageToPNG($file->getTempName(), $tempImagePath)) {
+                        $pdf->Image($tempImagePath, 10, 10, 190);
+                    } else {
+                        session()->setFlashdata('error', 'Gagal mengonversi gambar ke format yang didukung.');
+                        return redirect()->to(base_url('manajemen/arsip'));
+                    }
+
+                    $pdf->Output($pdfFile, 'F'); // Simpan PDF
+
+                    // Update path ke file PDF hasil konversi
+                    $filePath = $pdfFile;
+
+                    // Tidak ada teks yang dapat diekstrak dari gambar
+                    $text = '';
                 } else {
                     session()->setFlashdata('error', 'Format file tidak didukung untuk diunggah.');
                     return redirect()->to(base_url('manajemen/arsip'));
@@ -360,5 +384,16 @@ class Arsip extends BaseController
         $ocr = new TesseractOCR($filePath);
         $ocr->lang('ind');
         return $ocr->run();
+    }
+
+    public function convertImageToPNG($sourcePath, $destinationPath)
+    {
+        $image = imagecreatefromstring(file_get_contents($sourcePath));
+        if ($image === false) {
+            return false; // Gagal memuat gambar
+        }
+        imagepng($image, $destinationPath); // Simpan sebagai PNG
+        imagedestroy($image); // Hapus dari memori
+        return true;
     }
 }
