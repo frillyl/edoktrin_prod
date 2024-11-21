@@ -46,7 +46,7 @@ $routes->get('/dashboard/arsip/preview/(:any)', function ($fileName) {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 });
-$routes->get('/dashboard/download/(:any)', function ($fileName) {
+$routes->get('/dashboard/arsip/download/(:any)', function ($fileName) {
     $path = WRITEPATH . 'uploads/' . $fileName;
     if (file_exists($path)) {
         header('Content-Type: application/pdf');

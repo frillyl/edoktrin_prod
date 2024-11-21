@@ -279,6 +279,21 @@
                 document.getElementById('pdfModal').style.display = 'flex';
             });
         });
+
+        document.querySelectorAll('.custom-download').forEach(button => {
+            button.addEventListener('click', function() {
+                // Ambil URL file dari atribut data
+                const downloadUrl = this.getAttribute('data-download-url');
+
+                // Buat elemen anchor sementara untuk mengunduh file
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = ''; // Nama file akan mengikuti dari server jika kosong
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
     }
 
     // Event listener untuk tombol close modal
@@ -353,23 +368,6 @@
         if (container.innerHTML !== '') {
             container.innerHTML = '';
         }
-    });
-</script>
-<script>
-    // Event listener untuk semua tombol "Unduh"
-    document.querySelectorAll('.custom-download').forEach(button => {
-        button.addEventListener('click', function() {
-            // Ambil URL file dari atribut data
-            const downloadUrl = this.getAttribute('data-download-url');
-
-            // Buat elemen anchor sementara untuk mengunduh file
-            const a = document.createElement('a');
-            a.href = downloadUrl;
-            a.download = ''; // Nama file akan mengikuti dari server jika kosong
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
     });
 </script>
 </body>
