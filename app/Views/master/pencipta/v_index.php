@@ -33,7 +33,10 @@
                             <div class="action-buttons">
                                 <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_pencipta'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>
                                 <button class="ubahunit" data-toggle="tooltip" data-target="#edit<?= $value['id_pencipta'] ?>" title="Edit Data"><i class="fa-solid fa-pen"></i></button>
-                                <button class="delete-btn" data-toggle="tooltip" data-id="<?= $value['id_pencipta'] ?>" data-name="<?= $value['pencipta'] ?>" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                                <?php $role = session()->get('role'); ?>
+                                <?php if (in_array($role, [1])): ?>
+                                    <button class="delete-btn" data-toggle="tooltip" data-id="<?= $value['id_pencipta'] ?>" data-name="<?= $value['pencipta'] ?>" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>

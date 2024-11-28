@@ -4,7 +4,7 @@
             <div class="card-body p-3">
                 <div class="row align-items-center justify-content-between">
                     <div class="col">
-                        <h2 class="greetings"><b>Selamat Datang, Admin!</b></h2>
+                        <h2 class="greetings"><b>Selamat Datang, <?= session('nama') ?>!</b></h2>
                         <p style="color: white;">
                             Selamat datang di portal E-Doktrin, solusi digital untuk pengelolaan arsip dan dokumen yang mudah, cepat, dan aman. Semoga portal ini mendukung efisiensi dan kemudahan akses bagi semua pengguna.
                         </p>

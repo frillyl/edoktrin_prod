@@ -74,15 +74,15 @@ class Login extends BaseController
                     return redirect()->to(base_url('dashboard'));
                 } else {
                     session()->setFlashdata('pesan', 'Login gagal. Username atau Password yang Anda masukkan salah.');
-                    return redirect()->to(base_url('/'))->withInput();
+                    return redirect()->to(base_url('/login'))->withInput();
                 }
             } else {
                 session()->setFlashdata('pesan', 'Login gagal. Akun Anda tidak ditemukan.');
-                return redirect()->to(base_url('/'))->withInput();
+                return redirect()->to(base_url('/login'))->withInput();
             }
         } else {
             session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
-            return redirect()->to(base_url('/'))->withInput();
+            return redirect()->to(base_url('/login'))->withInput();
         }
     }
 
