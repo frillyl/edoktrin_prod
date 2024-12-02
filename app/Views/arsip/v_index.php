@@ -1,3 +1,25 @@
+<style>
+    .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        /* Gabungkan sel tanpa garis antar sel */
+    }
+
+    .detail-table th,
+    .detail-table td {
+        border: none;
+        /* Hilangkan garis pada setiap sel */
+        padding: 8px;
+        /* Beri jarak antar teks agar lebih rapi */
+        text-align: left;
+    }
+
+    .detail-table th {
+        font-weight: bold;
+        /* Tebalkan teks header */
+    }
+</style>
+
 <div class="archive">
 
     <h3 class="title"><?= $sub ?></h3>
@@ -77,25 +99,65 @@
             <button class="close-btn" onclick="closeDetailModal('info<?= $value['id_arsip'] ?>')">×</button>
             <h2 style="margin-bottom: 30px; margin-top: 40px; font-weight: 700">Detail Data Arsip</h2>
             <div class="modal-body">
-                <p><strong>Nomor Doktrin</strong><span class="detail-value"><?= $value['no_arsip'] ?></span></p>
-                <p><strong>Tanggal Doktrin</strong><span class="detail-value"><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></span></p>
-                <p><strong>Tanggal Masuk Doktrin</strong><span class="detail-value"><?= date('j F Y', strtotime($value['tgl_masuk'])) ?></span></p>
-                <p><strong>Asal Doktrin</strong><span class="detail-value"><?= $value['pencipta'] ?></span></p>
-                <p><strong>Jenis Doktrin</strong><span class="detail-value"><?= $value['klasifikasi'] ?></span></p>
-                <p><strong>Unit Organisasi</strong><span class="detail-value"><?= $value['unit'] ?></span></p>
-                <p><strong>Perihal</strong><span class="detail-value"><?= $value['perihal'] ?></span></p>
-                <strong>Ditambahkan Pada</strong><span id="detailName" class="detail-value"><?= date('j F Y H:i:s', strtotime($value['created_at'])) ?></span></p>
-                <p><strong>Ditambahkan Oleh</strong><span id="detailUsername" class="detail-value"><?= $value['created_by_name'] ?></span></p>
-                <p><strong>Diubah Pada</strong><span id="detailRole" class="detail-value"><?php if ($value['edited_at'] == '') : ?>
-                            Data jenis doktrin belum pernah diubah.
-                        <?php else : ?>
-                            <?= date('j F Y H:i:s', strtotime($value['edited_at'])) ?>
-                        <?php endif; ?></span></p>
-                <p><strong>Diubah Oleh</strong><span id="detailAddedOn" class="detail-value"><?php if ($value['edited_by'] == 0) : ?>
-                            Data jenis doktrin belum pernah diubah.
-                        <?php else : ?>
-                            <?= $value['edited_by_name'] ?>
-                        <?php endif; ?></span></p>
+                <table class="detail-table">
+                    <tr>
+                        <th>Nomor Doktrin</th>
+                        <td><?= $value['no_arsip'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Doktrin</th>
+                        <td><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Masuk Doktrin</th>
+                        <td><?= date('j F Y', strtotime($value['tgl_masuk'])) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Asal Doktrin</th>
+                        <td><?= $value['pencipta'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Jenis Doktrin</th>
+                        <td><?= $value['klasifikasi'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Unit Organisasi</th>
+                        <td><?= $value['unit'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Perihal</th>
+                        <td><?= $value['perihal'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Ditambahkan Pada</th>
+                        <td><?= date('j F Y H:i:s', strtotime($value['created_at'])) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Ditambahkan Oleh</th>
+                        <td><?= $value['created_by_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Diubah Pada</th>
+                        <td>
+                            <?php if ($value['edited_at'] == '') : ?>
+                                Data jenis doktrin belum pernah diubah.
+                            <?php else : ?>
+                                <?= date('j F Y H:i:s', strtotime($value['edited_at'])) ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Diubah Oleh</th>
+                        <td>
+                            <?php if ($value['edited_by'] == 0) : ?>
+                                Data jenis doktrin belum pernah diubah.
+                            <?php else : ?>
+                                <?= $value['edited_by_name'] ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </table>
+
             </div>
         </div>
     </div>
@@ -121,13 +183,35 @@
                     <input type="text" id="nomor-doktrin" name="no_arsip" placeholder="Nomor Doktrin" class="input-arsip1">
                 </div>
                 <div class="form-group">
+                    <label for="nomor-kode">Nomor Kode</label>
+                    <input type="text" id="nomor-kode" name="no_kode" placeholder="Nomor Kode" class="input-arsip1">
+                </div>
+                <div class="form-group">
+                    <label for="nomor-registrasi">Nomor Registrasi</label>
+                    <input type="text" id="nomor-registrasi" name="no_reg" placeholder="Nomor Registrasi" class="input-arsip1">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
                     <label for="tanggal-doktrin">Tanggal Doktrin</label>
                     <input type="date" id="tanggal-doktrin" name="tgl_doktrin" class="input-arsip1">
                 </div>
                 <div class="form-group">
-                    <label for="tanggal-doktrin-masuk">Tanggal Doktrin Masuk</label>
+                    <label for="tanggal-doktrin-masuk">Arsip Masuk</label>
                     <input type="date" id="tanggal-doktrin-masuk" name="tgl_masuk" class="input-arsip1">
                 </div>
+                <div class="form-group">
+                    <label for="klasifikasi-doktrin">Klasifikasi</label>
+                    <div class="custom-select" data-input-id="hidden-kategori">
+                        <div class="select-selected">Pilih Klasifikasi<span class="dropdown-icon"></span></div>
+                        <div class="select-items">
+                            <div value="1">Biasa</div>
+                            <div value="2">Rahasia</div>
+                            <div value="3">Sangat Rahasia</div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="kategori" id="hidden-kategori">
             </div>
             <div class="form-row">
                 <div class="form-group">
@@ -148,7 +232,7 @@
                         <div class="select-selected">Pilih Jenis Doktrin<span class="dropdown-icon"></span></div>
                         <div class="select-items">
                             <?php foreach ($klasifikasi as $key => $value) { ?>
-                                <div value="<?= $value['id_klasifikasi'] ?>"><?= $value['kode'] ?> - <?= $value['klasifikasi'] ?></div>
+                                <div value="<?= $value['id_klasifikasi'] ?>"><?= $value['klasifikasi'] ?></div>
                             <?php } ?>
                         </div>
                     </div>

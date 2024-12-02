@@ -1152,6 +1152,26 @@ h1 {
     /* Pastikan teks turun ke baris baru jika panjang */
 }
 
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Gabungkan sel tanpa garis antar sel */
+}
+
+.detail-table th,
+.detail-table td {
+    border: none;
+    /* Hilangkan garis pada setiap sel */
+    padding: 8px;
+    /* Beri jarak antar teks agar lebih rapi */
+    text-align: left;
+}
+
+.detail-table th {
+    font-weight: bold;
+    /* Tebalkan teks header */
+}
+
 .table th,
 .table td {
     white-space: nowrap;

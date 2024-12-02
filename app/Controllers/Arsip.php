@@ -72,6 +72,29 @@ class Arsip extends BaseController
                     'required' => '{field} wajib diisi!'
                 ]
             ],
+            'no_kode' => [
+                'label' => 'Nomor Kode',
+                'rules' => 'required|max_length[25]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'max_length' => '{field} maksimal terdiri dari 25 karakter!'
+                ]
+            ],
+            'no_reg' => [
+                'label' => 'Nomor Registrasi',
+                'rules' => 'required|max_length[25]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'max_length' => '{field} maksimal terdiri dari 25 karakter!'
+                ]
+            ],
+            'kategori' => [
+                'label' => 'Klasifikasi',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} wajib diisi!'
+                ]
+            ],
             'id_pencipta' => [
                 'label' => 'Asal Doktrin',
                 'rules' => 'required',
@@ -109,10 +132,10 @@ class Arsip extends BaseController
             ],
             'nama_file' => [
                 'label' => 'File',
-                'rules' => 'uploaded[nama_file]|max_size[nama_file,51200]|mime_in[nama_file,application/pdf,image/jpeg,image/jpg,image/png,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
+                'rules' => 'uploaded[nama_file]|max_size[nama_file,102400]|mime_in[nama_file,application/pdf,image/jpeg,image/jpg,image/png,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
                 'errors' => [
                     'uploaded' => '{field} harus berupa file!',
-                    'max_size' => '{field} maksimal 50MB!',
+                    'max_size' => '{field} maksimal 100MB!',
                     'mime_in' => '{field} hanya berupa file PDF, JPEG, PNG, DOC, dan DOCX!'
                 ]
             ],
@@ -183,8 +206,11 @@ class Arsip extends BaseController
                 // Data untuk disimpan ke database
                 $data = [
                     'no_arsip' => $this->request->getPost('no_arsip'),
+                    'no_kode' => $this->request->getPost('no_kode'),
+                    'no_reg' => $this->request->getPost('no_reg'),
                     'tgl_doktrin' => $this->request->getPost('tgl_doktrin'),
                     'id_pencipta' => $this->request->getPost('id_pencipta'),
+                    'kategori' => $this->request->getPost('kategori'),
                     'id_klasifikasi' => $this->request->getPost('id_klasifikasi'),
                     'perihal' => $this->request->getPost('perihal'),
                     'tgl_masuk' => $this->request->getPost('tgl_masuk'),

@@ -9,7 +9,7 @@ class ModelArsip extends Model
     protected $table = "tb_arsip";
     protected $primaryKey = "id_arsip";
     protected $returnType = "object";
-    protected $allowedFields = ['no_arsip', 'tgl_doktrin', 'id_pencipta', 'id_klasifikasi', 'perihal', 'tgl_masuk', 'id_unit', 'nama_file', 'tipe_file', 'path_file', 'isi_file', 'created_by', 'edited_by'];
+    protected $allowedFields = ['no_arsip', 'tgl_doktrin', 'no_kode', 'no_reg', 'kategori', 'id_pencipta', 'id_klasifikasi', 'perihal', 'tgl_masuk', 'id_unit', 'nama_file', 'tipe_file', 'path_file', 'isi_file', 'created_by', 'edited_by'];
 
     public function allData()
     {
@@ -23,7 +23,7 @@ class ModelArsip extends Model
             ->select('tb_arsip.*, creator.nama as created_by_name, editor.nama as edited_by_name')
             ->select('tb_pencipta.pencipta')
             ->select('tb_unit.unit')
-            ->select('tb_klasifikasi.kode, klasifikasi, retensi, kategori')
+            ->select('tb_klasifikasi.kode, klasifikasi, retensi')
             ->orderBy('tb_arsip.no_arsip')
             ->get()->getResultArray();
     }
