@@ -35,9 +35,9 @@
                     <tr>
                         <td><?= $no++ ?>.</td>
                         <td><?= $value['no_arsip'] ?></td>
-                        <td><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></td>
+                        <td><?= date('j-m-Y', strtotime($value['tgl_doktrin'])) ?></td>
                         <td><?= $value['pencipta'] ?></td>
-                        <td><?= $value['perihal'] ?></td>
+                        <td class="perihal-column"><?= $value['perihal'] ?></td>
                         <td>
                             <div class="action-buttons">
                                 <button class="detail-btn" data-toggle="tooltip" data-target="#info<?= $value['id_arsip'] ?>" title="Lihat Detail"><i class="fa-solid fa-info"></i></button>

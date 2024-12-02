@@ -60,7 +60,7 @@
 <body class="background" style="background-color: #EAEAEA;">
     <nav>
         <div class="judul">
-            <img src="<?= base_url() ?>/public/assets/images/logo.png" alt="E-ARSIP Icon" class="logo"> E-ARSIP
+            <img src="<?= base_url() ?>/public/assets/images/logo.png" alt="E-ARSIP Icon" class="logo"> E-DOKTRIN
         </div>
 
         <div class="icon-login">

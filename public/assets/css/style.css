@@ -1143,6 +1143,15 @@ h1 {
     /* Lebar minimum agar tabel tidak terlalu rapat */
 }
 
+.card-table table td.perihal-column {
+    max-width: 300px;
+    /* Sesuaikan lebar sesuai kebutuhan */
+    word-wrap: break-word;
+    /* Teks panjang akan dilanjutkan ke baris berikutnya */
+    white-space: normal;
+    /* Pastikan teks turun ke baris baru jika panjang */
+}
+
 .table th,
 .table td {
     white-space: nowrap;
