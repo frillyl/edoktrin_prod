@@ -251,6 +251,27 @@ class Arsip extends BaseController
                     'required' => '{field} wajib diisi!'
                 ]
             ],
+            'no_kode' => [
+                'label' => 'Nomor Kode',
+                'rules' => 'required|max_length[25]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'max_length' => '{field} maksimal terdiri dari 25 karakter!'
+                ]
+            ],
+            'no_reg' => [
+                'label' => 'Nomor Registrasi',
+                'rules' => 'required|max_length[25]',
+                'errors' => [
+                    'required' => '{field} wajib diisi!',
+                    'max_length' => '{field} maksimal terdiri dari 25 karakter!'
+                ]
+            ],
+            'kategori' => [
+                'label' => 'Klasifikasi',
+                'rules' => 'required',
+                'errors' => ['required' => '{field} wajib diisi!']
+            ],
             'id_pencipta' => [
                 'label' => 'Asal Doktrin',
                 'rules' => 'required',
@@ -339,6 +360,9 @@ class Arsip extends BaseController
             $data = [
                 'no_arsip' => $this->request->getPost('no_arsip'),
                 'tgl_doktrin' => $this->request->getPost('tgl_doktrin'),
+                'no_kode' => $this->request->getPost('no_kode'),
+                'no_reg' => $this->request->getPost('no_reg'),
+                'kategori' => $this->request->getPost('kategori'),
                 'id_pencipta' => $this->request->getPost('id_pencipta'),
                 'id_klasifikasi' => $this->request->getPost('id_klasifikasi'),
                 'perihal' => $this->request->getPost('perihal'),

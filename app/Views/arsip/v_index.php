@@ -105,12 +105,34 @@
                         <td><?= $value['no_arsip'] ?></td>
                     </tr>
                     <tr>
+                        <th>Nomor Kode</th>
+                        <td><?= $value['no_kode'] ?></td>
+                    </tr>
+                    <tr>
+                        <th>Nomor Registrasi</th>
+                        <td><?= $value['no_reg'] ?></td>
+                    </tr>
+                    <tr>
                         <th>Tanggal Doktrin</th>
                         <td><?= date('j F Y', strtotime($value['tgl_doktrin'])) ?></td>
                     </tr>
                     <tr>
-                        <th>Tanggal Masuk Doktrin</th>
+                        <th>Tanggal Arsip Masuk</th>
                         <td><?= date('j F Y', strtotime($value['tgl_masuk'])) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Klasifikasi</th>
+                        <td><?php
+                            if ($value['kategori'] == 1) {
+                                echo 'Biasa';
+                            } elseif ($value['kategori'] == 2) {
+                                echo 'Rahasia';
+                            } elseif ($value['kategori'] == 3) {
+                                echo 'Sangat Rahasia';
+                            } else {
+                                echo 'Tidak Diketahui';
+                            }
+                            ?></td>
                     </tr>
                     <tr>
                         <th>Asal Doktrin</th>
@@ -295,6 +317,16 @@
                         <input type="text" id="nomor-doktrin" name="no_arsip" placeholder="Nomor Doktrin" class="input-arsip1" value="<?= $value['no_arsip'] ?>">
                     </div>
                     <div class="form-group">
+                        <label for="nomor-kode">Nomor Kode</label>
+                        <input type="text" id="nomor-kode" name="no_kode" placeholder="Nomor Kode" class="input-arsip1" value="<?= $value['no_kode'] ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomor-registrasi">Nomor Registrasi</label>
+                        <input type="text" id="nomor-registrasi" name="no_reg" placeholder="Nomor Registrasi" class="input-arsip1" value="<?= $value['no_reg'] ?>">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
                         <label for="tanggal-doktrin">Tanggal Doktrin</label>
                         <input type="date" id="tanggal-doktrin" name="tgl_doktrin" class="input-arsip1" value="<?= $value['tgl_doktrin'] ?>">
                     </div>
@@ -302,6 +334,28 @@
                         <label for="tanggal-doktrin-masuk">Tanggal Doktrin Masuk</label>
                         <input type="date" id="tanggal-doktrin-masuk" name="tgl_masuk" class="input-arsip1" value="<?= $value['tgl_masuk'] ?>">
                     </div>
+                    <div class="form-group">
+                        <label for="klasifikasi-doktrin">Klasifikasi</label>
+                        <div class="custom-select" data-input-id="hidden-id-klasifikasi">
+                            <?php
+                            $klasifikasiText = '';
+                            if ($value['id_klasifikasi'] == 1) {
+                                $klasifikasiText = 'Biasa';
+                            } elseif ($value['id_klasifikasi'] == 2) {
+                                $klasifikasiText = 'Rahasia';
+                            } elseif ($value['id_klasifikasi'] == 3) {
+                                $klasifikasiText = 'Sangat Rahasia';
+                            }
+                            ?>
+                            <div class="select-selected"><?= $klasifikasiText ?? 'Pilih Jenis Doktrin' ?><span class="dropdown-icon"></span></div>
+                            <div class="select-items">
+                                <div value="1" <?= isset($value['id_klasifikasi']) && $value['id_klasifikasi'] == 1 ? 'selected' : '' ?>>Biasa</div>
+                                <div value="2" <?= isset($value['id_klasifikasi']) && $value['id_klasifikasi'] == 2 ? 'selected' : '' ?>>Rahasia</div>
+                                <div value="3" <?= isset($value['id_klasifikasi']) && $value['id_klasifikasi'] == 3 ? 'selected' : '' ?>>Sangat Rahasia</div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="kategori" id="hidden-kategori" value="<?= $value['kategori'] ?>">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
